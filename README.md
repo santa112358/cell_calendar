@@ -32,7 +32,7 @@ The callback `onPageChanged` is literally called when the current page is change
       }
     );
 ```
-In this sample code, `firstDate` is the date in the very first cell of the new page, and the logic is same as `lastDate`.
+In this sample code, `firstDate` is the date in the very first cell of the new page, and its logic is same as `lastDate`.
 
 - **onCellTapped**
 
@@ -60,5 +60,5 @@ It is called with tapped DateTime, so you can get the events on the date if you 
 
 ```
 
-If you have any requests or questions, please feel free to create a new issue on [github](https://github.com/santa112358/cell_calendar/issues).
+If you have any requests, questions or problems, please feel free to create a new issue on [github](https://github.com/santa112358/cell_calendar/issues).
 
