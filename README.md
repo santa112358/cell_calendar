@@ -1,4 +1,4 @@
-# src
+# cell_calendar
 
 A new Flutter package.
 
