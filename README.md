@@ -8,12 +8,12 @@ Modern calendar widget with useful features. Inspired by the UI of Google calend
 
 - **Events**
 
-You can show the events in calendar by inserting list of CalendarEvent as `events`
+You can show the events in the calendar by inserting the list of CalendarEvent as `events`
 ```dart
     CellCalendar(
       events:[
-        CalendarEvent(eventName: "Hello World",eventDate: DateTime1),
-        CalendarEvent(eventName: "Hello World",eventDate: DateTime2),
+        CalendarEvent(eventName: "Event 1",eventDate: DateTime1),
+        CalendarEvent(eventName: "Event 2",eventDate: DateTime2),
       ]
     );
 ```
