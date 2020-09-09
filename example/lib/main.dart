@@ -98,12 +98,16 @@ class MyHomePage extends StatelessWidget {
       body: CellCalendar(
         events: sampleEvents,
         onCellTapped: (date) {
-          final eventsOnTheDate = sampleEvents.where((event) {
-            final eventDate = event.eventDate;
-            return eventDate.year == date.year &&
-                eventDate.month == date.month &&
-                eventDate.day == date.day;
-          }).toList();
+          final eventsOnTheDate = sampleEvents
+              .where((event) {
+                final eventDate = event.eventDate;
+                return eventDate.year == date.year &&
+                    eventDate.month == date.month &&
+                    eventDate.day == date.day;
+              })
+              .toList()
+              .reversed
+              .toList();
           showDialog(
               context: context,
               builder: (_) => AlertDialog(
