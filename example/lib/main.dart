@@ -71,10 +71,9 @@ class MyHomePage extends StatelessWidget {
             ),
           );
         },
-        onPageChanged: (firstDate, lastDate){
+        onPageChanged: (firstDate, lastDate) {
           /// Called when the page was changed
           /// Fetch additional events by using the range between [firstDate] and [lastDate] if you want
-
         },
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
