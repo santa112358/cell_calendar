@@ -18,7 +18,7 @@ class CellCalendar extends StatelessWidget {
   CellCalendar({this.events = const [], this.onPageChanged, this.onCellTapped});
 
   final List<CalendarEvent> events;
-  final Function(DateTime firstDate, DateTime lastDate) onPageChanged;
+  final void Function(DateTime firstDate, DateTime lastDate) onPageChanged;
   final void Function(DateTime) onCellTapped;
 
   @override
