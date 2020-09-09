@@ -2,7 +2,7 @@
 
 [(https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
 
-Modern calendar widget with useful features. Inspired by the UI of Google calendar
+**Modern calendar widget with useful features. Inspired by the UI of Google calendar**
 
 ![cell_calendar](https://user-images.githubusercontent.com/43510799/92649244-ae30e180-f325-11ea-92a8-3e21d76aacd8.gif)
 
