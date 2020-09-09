@@ -2,7 +2,7 @@
 
 [(https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
 
-Full screen calendar widget with useful features. Inspired by the UI of Google calendar
+Modern calendar widget with useful features. Inspired by the UI of Google calendar
 
 ## Usage
 

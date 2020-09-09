@@ -1,7 +1,7 @@
 name: cell_calendar
-description: A new Flutter package.
-version: 0.1.0
-author:
+description: Modern calendar widget with useful features
+version: 0.0.1
+author: Santa Takahashi<sun.jp.0212@gmail.com>
 homepage:
 
 environment:
