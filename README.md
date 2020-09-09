@@ -1,12 +1,12 @@
 # cell_calendar
 
-(https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
+[(https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
 
 Full screen calendar widget like Google calendar
 
 ## Usage
 
-- Events
+- **Events**
 
 You can show the events in calendar by inserting list of CalendarEvent as `events`
 ```dart
@@ -18,7 +18,8 @@ You can show the events in calendar by inserting list of CalendarEvent as `event
     );
 ```
 
-- onPageChanged
+- **onPageChanged**
+
 The callback `onPageChanged` is literally called when the current page is changed.
 ```dart
     CellCalendar(
@@ -29,7 +30,9 @@ The callback `onPageChanged` is literally called when the current page is change
     );
 ```
 In this sample code, `firstDate` is the date in the very first cell of the new page, and the logic is same as `lastDate`.
-- onCellTapped
+
+- **onCellTapped**
+
 The callback `onCellTapped` is called when user tapped a cell.
 ```dart
     CellCalendar(
