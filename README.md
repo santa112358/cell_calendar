@@ -1,6 +1,6 @@
 # cell_calendar
 
-[(https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
+[![pub package](https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
 
 **Modern calendar widget with useful features. Inspired by the UI of Google calendar**
 

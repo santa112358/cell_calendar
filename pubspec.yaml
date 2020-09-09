@@ -1,5 +1,5 @@
 name: cell_calendar
-description: Modern calendar widget with useful features
+description: Modern calendar widget with useful features.
 version: 0.0.1
 author: Santa Takahashi<sun.jp.0212@gmail.com>
 homepage: https://github.com/santa112358/cell_calendar
@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider:
+  provider: ^4.3.2+2
 
 dev_dependencies:
   flutter_test:
