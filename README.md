@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/cell_calendar.svg)](https://pub.dev/packages/cell_calendar)
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 
-**Modern calendar widget with useful features. Inspired by the UI of Google calendar**
+**Modern calendar widget with useful features. Enables to develop well designed calendar in a moment. Inspired by the UI of Google Calendar**
 
 ![cell_calendar](https://user-images.githubusercontent.com/43510799/92649244-ae30e180-f325-11ea-92a8-3e21d76aacd8.gif)
 
