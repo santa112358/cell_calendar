@@ -18,6 +18,9 @@ You can show the events in calendar by inserting list of CalendarEvent as `event
     );
 ```
 
+If you need to customize the calendar more, the additional parameters like `eventBackGroundColor`, `eventTextColor` and `eventID` are helpful.
+
+
 - **onPageChanged**
 
 The callback `onPageChanged` is literally called when the current page is changed.
