@@ -13,6 +13,7 @@ const List<String> _DaysOfTheWeek = [
   'Sat'
 ];
 
+/// Show the row of text from [_DaysOfTheWeek]
 class DaysOfTheWeek extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -25,7 +25,7 @@ class CalendarStateController extends ChangeNotifier {
   }
 
   void onPageChanged(int index) {
-    currentDateTime = index.currentDateTime;
+    currentDateTime = index.visibleDateTime;
     if (onPageChangedFromUserArgument != null) {
       final currentFirstDate = _getFirstDay(currentDateTime);
       onPageChangedFromUserArgument(

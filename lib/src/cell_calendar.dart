@@ -8,7 +8,7 @@ import 'components/days_row/days_row.dart';
 import 'components/month_year_label.dart';
 import 'controllers/calendar_month_controller.dart';
 import 'controllers/calendar_state_controller.dart';
-import 'controllers/cell_size_controller.dart';
+import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
 
 /// Calendar widget like a Google Calendar
@@ -30,16 +30,16 @@ class CellCalendar extends StatelessWidget {
               CalendarStateController(events, onPageChanged, onCellTapped),
         ),
         ChangeNotifierProvider(
-          create: (_) => CellSizeController(),
+          create: (_) => CellHeightController(),
         ),
       ],
-      child: _CalendarBody(),
+      child: _CalendarPageView(),
     );
   }
 }
-
-class _CalendarBody extends StatelessWidget {
-  _CalendarBody();
+/// Shows [MonthYearLabel] and PageView of [_CalendarPage]
+class _CalendarPageView extends StatelessWidget {
+  _CalendarPageView();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _CalendarBody extends StatelessWidget {
           child: PageView.builder(
               controller: PageController(initialPage: 1200),
               itemBuilder: (context, index) {
-                return _CalendarPage.wrapped(index.currentDateTime);
+                return _CalendarPage.wrapped(index.visibleDateTime);
               },
               onPageChanged: (index) {
                 Provider.of<CalendarStateController>(context, listen: false)
@@ -63,6 +63,9 @@ class _CalendarBody extends StatelessWidget {
   }
 }
 
+/// Page of [_CalendarPage]
+///
+/// Wrapped with [CalendarMonthController]
 class _CalendarPage extends StatelessWidget {
   const _CalendarPage._({
     Key key,

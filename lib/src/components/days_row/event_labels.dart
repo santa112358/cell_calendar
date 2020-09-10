@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../../calendar_event.dart';
 import '../../controllers/calendar_state_controller.dart';
-import '../../controllers/cell_size_controller.dart';
+import '../../controllers/cell_height_controller.dart';
 
+/// Numbers to return accurate events in the cell.
 const _dayLabelContentHeight = 14;
 const _dayLabelVerticalMargin = 4;
 const _dayLabelHeight = _dayLabelContentHeight + (_dayLabelVerticalMargin * 2);
@@ -13,6 +14,11 @@ const _eventLabelContentHeight = 13;
 const _eventLabelBottomMargin = 3;
 const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 
+
+/// Get events to be shown from [CalendarStateController]
+///
+/// Shows accurate number of [_EventLabel] by the height of the parent cell
+/// notified from [CellHeightController]
 class EventLabels extends StatelessWidget {
   EventLabels(this.date);
 
@@ -44,7 +50,7 @@ class EventLabels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cellHeight = Provider.of<CellSizeController>(context).cellHeight;
+    final cellHeight = Provider.of<CellHeightController>(context).cellHeight;
     return Selector<CalendarStateController, List<CalendarEvent>>(
       builder: (context, events, _) {
         if (cellHeight == null) {
@@ -87,6 +93,7 @@ class EventLabels extends StatelessWidget {
   }
 }
 
+/// label to show [CalendarEvent]
 class _EventLabel extends StatelessWidget {
   _EventLabel(this.event);
 

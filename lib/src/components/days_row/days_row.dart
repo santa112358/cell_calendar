@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/calendar_state_controller.dart';
-import '../../controllers/cell_size_controller.dart';
+import '../../controllers/cell_height_controller.dart';
 import 'event_labels.dart';
 import 'measure_size.dart';
 
-/// Show cells of days with events
+/// Show the row of [_DayCell] cells with events
 class DaysRow extends StatelessWidget {
   const DaysRow({
     @required this.dates,
@@ -27,6 +27,9 @@ class DaysRow extends StatelessWidget {
   }
 }
 
+/// Cell of calendar.
+///
+/// Its height is circulated by [MeasureSize] and notified by [CellHeightController]
 class _DayCell extends StatelessWidget {
   _DayCell(this.date);
 
@@ -50,7 +53,7 @@ class _DayCell extends StatelessWidget {
           ),
           child: MeasureSize(
             onChange: (size) {
-              Provider.of<CellSizeController>(context, listen: false)
+              Provider.of<CellHeightController>(context, listen: false)
                   .onChanged(size);
             },
             child: Column(

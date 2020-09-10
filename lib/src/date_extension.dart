@@ -1,5 +1,9 @@
+/// Initial index for pageView of calendar
+///
+/// User can get back to maximum 100 year and 1 month.
 const int initialPageIndex = 1200;
 
+/// Extension to show accurate date in the calendar by current index of pageView
 extension DateExtension on int {
   int get fromInitialIndex {
     return this - 1200;
@@ -9,6 +13,7 @@ extension DateExtension on int {
     return Duration(days: (this == 7) ? 0 : -this);
   }
 
+  /// MonthName for the number of month
   String get monthName {
     switch (this) {
       case 1:
@@ -40,31 +45,40 @@ extension DateExtension on int {
     return "";
   }
 
-  DateTime get currentDateTime {
+  /// Return year and month to be shown by the currentIndex of pageView
+  DateTime get visibleDateTime {
     final monthDif = this - 1200;
-    final currentYear = _currentYear(monthDif);
-    final currentMonth = _currentMonth(monthDif);
-    return DateTime(currentYear, currentMonth);
+    final visibleYear = _visibleYear(monthDif);
+    final visibleMonth = _visibleMonth(monthDif);
+    return DateTime(visibleYear, visibleMonth);
   }
 
-  int _currentYear(int monthDif) {
-    final initialMonth = DateTime.now().month;
-    final initialYear = DateTime.now().year;
-    final res = initialMonth + monthDif;
-    if (res > 0) {
-      return initialYear + (res ~/ 12);
+  int _visibleYear(int monthDif) {
+    final currentMonth = DateTime.now().month;
+    final currentYear = DateTime.now().year;
+    final visibleMonth = currentMonth + monthDif;
+
+    /// When visible month is in the current year or future year
+    if (visibleMonth > 0) {
+      return currentYear + (visibleMonth ~/ 12);
+
+      /// When visible month is in the past year
     } else {
-      return initialYear + ((res ~/ 12) - 1);
+      return currentYear + ((visibleMonth ~/ 12) - 1);
     }
   }
 
-  int _currentMonth(int monthDif) {
+  int _visibleMonth(int monthDif) {
     final initialMonth = DateTime.now().month;
-    final res = initialMonth + monthDif;
-    if (res > 0) {
-      return res % 12;
+    final currentMonth = initialMonth + monthDif;
+
+    /// When visible month is in the current year or future year
+    if (currentMonth > 0) {
+      return currentMonth % 12;
+
+      /// When visible month is in the past year
     } else {
-      return 12 - (-res % 12);
+      return 12 - (-currentMonth % 12);
     }
   }
 }
