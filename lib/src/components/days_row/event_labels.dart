@@ -14,7 +14,6 @@ const _eventLabelContentHeight = 13;
 const _eventLabelBottomMargin = 3;
 const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 
-
 /// Get events to be shown from [CalendarStateController]
 ///
 /// Shows accurate number of [_EventLabel] by the height of the parent cell

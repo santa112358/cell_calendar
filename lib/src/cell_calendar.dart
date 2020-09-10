@@ -37,6 +37,7 @@ class CellCalendar extends StatelessWidget {
     );
   }
 }
+
 /// Shows [MonthYearLabel] and PageView of [_CalendarPage]
 class _CalendarPageView extends StatelessWidget {
   _CalendarPageView();
