@@ -16,7 +16,7 @@
 You can show the events in the calendar by inserting the list of CalendarEvent as `events`
 ```dart
     CellCalendar(
-      events:[
+      events: [
         CalendarEvent(eventName: "Event 1",eventDate: DateTime1),
         CalendarEvent(eventName: "Event 2",eventDate: DateTime2),
       ]
@@ -31,7 +31,7 @@ If you need to customize the calendar more, the additional parameters like `even
 The callback `onPageChanged` is literally called when the current page is changed.
 ```dart
     CellCalendar(
-      onPageChanged: (firstDate, lastDate){
+      onPageChanged: (firstDate, lastDate) {
         print("This is the first date of the new page: $firstDate");
         print("This is the last date of the new page: $lastDate");
       }
@@ -44,7 +44,7 @@ In this sample code, `firstDate` is the date in the very first cell of the new p
 The callback `onCellTapped` is called when user tapped a cell.
 ```dart
     CellCalendar(
-      onCellTapped: (date){
+      onCellTapped: (date) {
         print("$date is tapped !");
       }
     );
@@ -60,6 +60,7 @@ It is called with tapped DateTime, so you can get the events on the date if you 
               eventDate.month == date.month &&
               eventDate.day == date.day;
         }).toList();
+        /// ex) Show dialog or navigate to new page with [eventsOnTheDate]
       }
     );
 
