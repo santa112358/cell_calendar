@@ -35,6 +35,13 @@ class EventLabels extends StatelessWidget {
     return spaceForEvents > eventsTotalHeight;
   }
 
+  int _maxIndex(double cellHeight, int eventsLength) {
+    final spaceForEvents = cellHeight - _dayLabelHeight;
+    const indexing = 1;
+    const indexForPlot = 1;
+    return spaceForEvents ~/ _eventLabelHeight - (indexing + indexForPlot);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cellHeight = Provider.of<CellSizeController>(context).cellHeight;
@@ -46,18 +53,17 @@ class EventLabels extends StatelessWidget {
         final eventsOnTheDay = _eventsOnTheDay(date, events);
         final hasEnoughSpace =
             _hasEnoughSpace(cellHeight, eventsOnTheDay.length);
-        final indexWithPlot = eventsOnTheDay.length - 3;
+        final maxIndex = _maxIndex(cellHeight, eventsOnTheDay.length);
         return ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: eventsOnTheDay.length ?? 0,
-          reverse: true,
+          itemCount: eventsOnTheDay?.length ?? 0,
           itemBuilder: (context, index) {
             if (hasEnoughSpace) {
               return _EventLabel(eventsOnTheDay[index]);
-            } else if (index > indexWithPlot) {
+            } else if (index < maxIndex) {
               return _EventLabel(eventsOnTheDay[index]);
-            } else if (index == indexWithPlot) {
+            } else if (index == maxIndex) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
