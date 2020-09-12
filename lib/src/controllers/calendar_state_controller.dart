@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 import '../calendar_event.dart';
@@ -5,8 +6,11 @@ import '../date_extension.dart';
 
 /// Controller to call functions from argument like [onPageChanged] and [onCellTapped]
 class CalendarStateController extends ChangeNotifier {
-  CalendarStateController(this.events, this.onPageChangedFromUserArgument,
-      this.onCellTappedFromUserArgument) {
+  CalendarStateController({
+    @required this.events,
+    @required this.onPageChangedFromUserArgument,
+    @required this.onCellTappedFromUserArgument,
+  }) {
     this._initialize();
   }
 

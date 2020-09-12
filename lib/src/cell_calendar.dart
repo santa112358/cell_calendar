@@ -11,27 +11,46 @@ import 'controllers/calendar_state_controller.dart';
 import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
 
+class TodayUIConfig {
+  final Color todayMarkColor;
+  final Color todayTextColor;
+
+  TodayUIConfig(this.todayTextColor, this.todayMarkColor);
+}
+
 /// Calendar widget like a Google Calendar
 ///
 /// Expected to be used in full screen
 class CellCalendar extends StatelessWidget {
-  CellCalendar({this.events = const [], this.onPageChanged, this.onCellTapped});
+  CellCalendar({
+    this.events = const [],
+    this.onPageChanged,
+    this.onCellTapped,
+    this.todayMarkColor = Colors.blue,
+    this.todayTextColor = Colors.white,
+  });
 
   final List<CalendarEvent> events;
   final void Function(DateTime firstDate, DateTime lastDate) onPageChanged;
   final void Function(DateTime) onCellTapped;
+  final Color todayMarkColor;
+  final Color todayTextColor;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) =>
-              CalendarStateController(events, onPageChanged, onCellTapped),
+          create: (_) => CalendarStateController(
+            events: events,
+            onPageChangedFromUserArgument: onPageChanged,
+            onCellTappedFromUserArgument: onCellTapped,
+          ),
         ),
         ChangeNotifierProvider(
           create: (_) => CellHeightController(),
         ),
+        Provider.value(value: TodayUIConfig(todayTextColor, todayMarkColor)),
       ],
       child: _CalendarPageView(),
     );
