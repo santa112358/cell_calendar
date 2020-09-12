@@ -45,8 +45,6 @@ class CellCalendar extends StatelessWidget {
             events: events,
             onPageChangedFromUserArgument: onPageChanged,
             onCellTappedFromUserArgument: onCellTapped,
-            todayMarkColor: todayMarkColor,
-            todayTextColor: todayTextColor,
           ),
         ),
         ChangeNotifierProvider(

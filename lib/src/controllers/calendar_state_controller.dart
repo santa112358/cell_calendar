@@ -10,8 +10,6 @@ class CalendarStateController extends ChangeNotifier {
     @required this.events,
     @required this.onPageChangedFromUserArgument,
     @required this.onCellTappedFromUserArgument,
-    @required this.todayMarkColor,
-    @required this.todayTextColor,
   }) {
     this._initialize();
   }
@@ -22,10 +20,6 @@ class CalendarStateController extends ChangeNotifier {
       onPageChangedFromUserArgument;
 
   final void Function(DateTime) onCellTappedFromUserArgument;
-
-  final Color todayMarkColor;
-
-  final Color todayTextColor;
 
   DateTime currentDateTime;
 
