@@ -1,3 +1,4 @@
+import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,10 @@ class _DayCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final today = DateTime.now();
+    final isToday = date.year == today.year &&
+        date.month == today.month &&
+        date.day == today.day;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -58,20 +63,68 @@ class _DayCell extends StatelessWidget {
             },
             child: Column(
               children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 4),
-                  height: 14,
-                  child: Text(
-                    date.day.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
+                isToday ? _TodayDayLabel(date: date) : _DayLabel(date: date),
                 EventLabels(date),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _TodayDayLabel extends StatelessWidget {
+  const _TodayDayLabel({
+    Key key,
+    @required this.date,
+  }) : super(key: key);
+
+  final DateTime date;
+
+  @override
+  Widget build(BuildContext context) {
+    final config = Provider.of<TodayUIConfig>(context, listen: false);
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 2),
+      height: 20,
+      width: 20,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: config.todayMarkColor,
+      ),
+      child: Center(
+        child: Text(
+          date.day.toString(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: config.todayTextColor,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DayLabel extends StatelessWidget {
+  const _DayLabel({
+    Key key,
+    @required this.date,
+  }) : super(key: key);
+
+  final DateTime date;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
+      height: dayLabelContentHeight.toDouble(),
+      child: Text(
+        date.day.toString(),
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
