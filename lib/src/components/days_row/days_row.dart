@@ -1,4 +1,5 @@
 import 'package:cell_calendar/cell_calendar.dart';
+import 'package:cell_calendar/src/controllers/calendar_month_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -118,13 +119,19 @@ class _DayLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller =
+        Provider.of<CalendarMonthController>(context, listen: false);
+    final isCurrentMonth = controller.currentPageDate.month == date.month;
+    final colorScheme = Theme.of(context).textTheme.bodyText1.color;
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
       height: dayLabelContentHeight.toDouble(),
       child: Text(
         date.day.toString(),
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isCurrentMonth ? colorScheme : colorScheme.withOpacity(0.4)),
       ),
     );
   }
