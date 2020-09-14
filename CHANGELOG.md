@@ -1,3 +1,6 @@
+## 0.1.1
+* Enable opacity when the date is not in the current page month
+
 ## 0.1.0
 * Add a feature marking today's day cell.
 
