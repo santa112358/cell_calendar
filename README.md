@@ -66,5 +66,5 @@ It is called with tapped DateTime, so you can get the events on the date if you 
 
 ```
 
-If you have any requests, questions, or problems, please feel free to ask on [github](https://github.com/santa112358/cell_calendar/issues).
+If you have any requests or questions, please feel free to ask on [github](https://github.com/santa112358/cell_calendar/issues).
 
