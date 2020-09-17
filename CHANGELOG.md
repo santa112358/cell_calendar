@@ -1,3 +1,6 @@
+## 0.1.1+1
+* Fix system to show monthName
+
 ## 0.1.1
 * Enable opacity when the date is not in the current page month
 
