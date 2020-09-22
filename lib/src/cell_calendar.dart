@@ -111,7 +111,6 @@ class _CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final days = _getCurrentDays(visiblePageDate);
-    print(days);
     return Column(
       children: [
         DaysOfTheWeek(),

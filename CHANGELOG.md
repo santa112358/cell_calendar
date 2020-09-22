@@ -1,3 +1,6 @@
+## 0.1.2
+* Fix the logic and structure to show visible days on current page.
+
 ## 0.1.1+1
 * Fix system to show monthName
 
