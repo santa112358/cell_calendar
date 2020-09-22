@@ -1,5 +1,4 @@
 import 'package:cell_calendar/cell_calendar.dart';
-import 'package:cell_calendar/src/controllers/calendar_month_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,18 +10,20 @@ import 'measure_size.dart';
 /// Show the row of [_DayCell] cells with events
 class DaysRow extends StatelessWidget {
   const DaysRow({
+    @required this.visiblePageDate,
     @required this.dates,
     Key key,
   }) : super(key: key);
 
   final List<DateTime> dates;
+  final DateTime visiblePageDate;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
         children: dates.map((date) {
-          return _DayCell(date);
+          return _DayCell(date, visiblePageDate);
         }).toList(),
       ),
     );
@@ -33,9 +34,10 @@ class DaysRow extends StatelessWidget {
 ///
 /// Its height is circulated by [MeasureSize] and notified by [CellHeightController]
 class _DayCell extends StatelessWidget {
-  _DayCell(this.date);
+  _DayCell(this.date, this.visiblePageDate);
 
   final DateTime date;
+  final DateTime visiblePageDate;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,9 @@ class _DayCell extends StatelessWidget {
             },
             child: Column(
               children: [
-                isToday ? _TodayDayLabel(date: date) : _DayLabel(date: date),
+                isToday
+                    ? _TodayDayLabel(date: date)
+                    : _DayLabel(date: date, visiblePageDate: visiblePageDate),
                 EventLabels(date),
               ],
             ),
@@ -113,15 +117,15 @@ class _DayLabel extends StatelessWidget {
   const _DayLabel({
     Key key,
     @required this.date,
+    @required this.visiblePageDate,
   }) : super(key: key);
 
   final DateTime date;
+  final DateTime visiblePageDate;
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Provider.of<CalendarMonthController>(context, listen: false);
-    final isCurrentMonth = controller.currentPageDate.month == date.month;
+    final isCurrentMonth = visiblePageDate.month == date.month;
     final colorScheme = Theme.of(context).textTheme.bodyText1.color;
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
