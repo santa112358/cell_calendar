@@ -10,6 +10,8 @@ import 'controllers/calendar_state_controller.dart';
 import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
 
+typedef daysOfTheWeekBuilder = Widget Function(int index);
+
 class TodayUIConfig {
   final Color todayMarkColor;
   final Color todayTextColor;
@@ -27,8 +29,10 @@ class CellCalendar extends StatelessWidget {
     this.onCellTapped,
     this.todayMarkColor = Colors.blue,
     this.todayTextColor = Colors.white,
+    this.daysOfTheWeekBuilder,
   });
 
+  final Widget Function(int index) daysOfTheWeekBuilder;
   final List<CalendarEvent> events;
   final void Function(DateTime firstDate, DateTime lastDate) onPageChanged;
   final void Function(DateTime) onCellTapped;
