@@ -72,6 +72,7 @@ If you don't want to use default labels on the calendar, you can use callbacks f
 ```dart
     CellCalendar(
       daysOfTheWeekBuilder: (dayIndex) {
+        /// dayIndex: 0 for Sunday, 6 for Saturday.
         final labels = ["S", "M", "T", "W", "T", "F", "S"];
         return Padding(
           padding: const EdgeInsets.only(bottom: 4.0),
