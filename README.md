@@ -66,5 +66,44 @@ It is called with tapped DateTime, so you can get the events on the date if you 
 
 ```
 
+- **daysOfTheWeekBuilder and monthYearLabelBuilder**
+
+If you don't want to use default labels on the calendar, you can use callbacks for customization.
+```dart
+    CellCalendar(
+      daysOfTheWeekBuilder: (dayIndex) {
+        final labels = ["S", "M", "T", "W", "T", "F", "S"];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: Text(
+            labels[dayIndex],
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+      monthYearLabelBuilder: (datetime) {
+        final year = datetime.year.toString();
+        final month = datetime.month.toString();
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            "$month, $year",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        );
+      },
+    )
+```
+
+
+
+
+
 If you have any requests or questions, please feel free to ask on [github](https://github.com/santa112358/cell_calendar/issues).
 
