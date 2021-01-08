@@ -1,3 +1,4 @@
+import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
 
 /// Days of the week
@@ -15,21 +16,32 @@ const List<String> _DaysOfTheWeek = [
 
 /// Show the row of text from [_DaysOfTheWeek]
 class DaysOfTheWeek extends StatelessWidget {
+  DaysOfTheWeek(this.daysOfTheWeekBuilder);
+
+  final daysBuilder daysOfTheWeekBuilder;
+
+  Widget defaultLabels(index) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8),
+      child: Text(
+        _DaysOfTheWeek[index],
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: _DaysOfTheWeek.map((day) {
-        return Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Text(
-              day,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
-      }).toList(),
+      children: List.generate(
+        7,
+        (index) {
+          return Expanded(
+            child: daysOfTheWeekBuilder?.call(index) ?? defaultLabels(index),
+          );
+        },
+      ),
     );
   }
 }
