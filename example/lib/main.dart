@@ -35,6 +35,33 @@ class MyHomePage extends StatelessWidget {
       ),
       body: CellCalendar(
         events: _sampleEvents,
+        daysOfTheWeekBuilder: (dayIndex) {
+          final labels = ["S", "M", "T", "W", "T", "F", "S"];
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              labels[dayIndex],
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
+        monthYearLabelBuilder: (datetime) {
+          final year = datetime.year.toString();
+          final month = datetime.month.toString();
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "$month, $year",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
         onCellTapped: (date) {
           final eventsOnTheDate = _sampleEvents.where((event) {
             final eventDate = event.eventDate;

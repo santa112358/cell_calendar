@@ -1,3 +1,6 @@
+## 0.2.0
+* Add builder callbacks for customization of labels.
+
 ## 0.1.2
 * Fix the logic and structure to show visible days on current page.
 
