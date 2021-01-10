@@ -106,9 +106,11 @@ class _TodayLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = Provider.of<TodayUIConfig>(context, listen: false);
-    final caption = Theme.of(context).textTheme.caption;
-    final textStyle = dateTextStyle?.merge(caption) ??
-        caption.copyWith(fontWeight: FontWeight.w500);
+    final caption = Theme.of(context)
+        .textTheme
+        .caption
+        .copyWith(fontWeight: FontWeight.w500);
+    final textStyle = caption.merge(dateTextStyle) ?? caption;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       height: 20,
@@ -145,11 +147,10 @@ class _DayLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCurrentMonth = visiblePageDate.month == date.month;
-    final caption = Theme.of(context).textTheme.caption;
-    final textStyle = dateTextStyle?.merge(caption) ??
-        caption.copyWith(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onSurface);
+    final caption = Theme.of(context).textTheme.caption.copyWith(
+        fontWeight: FontWeight.w500,
+        color: Theme.of(context).colorScheme.onSurface);
+    final textStyle = caption.merge(dateTextStyle) ?? caption;
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
       height: dayLabelContentHeight.toDouble(),
