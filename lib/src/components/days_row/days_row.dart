@@ -12,18 +12,24 @@ class DaysRow extends StatelessWidget {
   const DaysRow({
     @required this.visiblePageDate,
     @required this.dates,
+    @required this.dateTextStyle,
     Key key,
   }) : super(key: key);
 
   final List<DateTime> dates;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
         children: dates.map((date) {
-          return _DayCell(date, visiblePageDate);
+          return _DayCell(
+            date,
+            visiblePageDate,
+            dateTextStyle,
+          );
         }).toList(),
       ),
     );
@@ -34,10 +40,11 @@ class DaysRow extends StatelessWidget {
 ///
 /// Its height is circulated by [MeasureSize] and notified by [CellHeightController]
 class _DayCell extends StatelessWidget {
-  _DayCell(this.date, this.visiblePageDate);
+  _DayCell(this.date, this.visiblePageDate, this.dateTextStyle);
 
   final DateTime date;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +74,15 @@ class _DayCell extends StatelessWidget {
             child: Column(
               children: [
                 isToday
-                    ? _TodayDayLabel(date: date)
-                    : _DayLabel(date: date, visiblePageDate: visiblePageDate),
+                    ? _TodayDayLabel(
+                        date: date,
+                        dateTextStyle: dateTextStyle,
+                      )
+                    : _DayLabel(
+                        date: date,
+                        visiblePageDate: visiblePageDate,
+                        dateTextStyle: dateTextStyle,
+                      ),
                 EventLabels(date),
               ],
             ),
@@ -83,9 +97,11 @@ class _TodayDayLabel extends StatelessWidget {
   const _TodayDayLabel({
     Key key,
     @required this.date,
+    @required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +134,12 @@ class _DayLabel extends StatelessWidget {
     Key key,
     @required this.date,
     @required this.visiblePageDate,
+    @required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
