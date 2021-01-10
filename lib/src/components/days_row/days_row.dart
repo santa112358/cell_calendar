@@ -12,18 +12,24 @@ class DaysRow extends StatelessWidget {
   const DaysRow({
     @required this.visiblePageDate,
     @required this.dates,
+    @required this.dateTextStyle,
     Key key,
   }) : super(key: key);
 
   final List<DateTime> dates;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
         children: dates.map((date) {
-          return _DayCell(date, visiblePageDate);
+          return _DayCell(
+            date,
+            visiblePageDate,
+            dateTextStyle,
+          );
         }).toList(),
       ),
     );
@@ -34,10 +40,11 @@ class DaysRow extends StatelessWidget {
 ///
 /// Its height is circulated by [MeasureSize] and notified by [CellHeightController]
 class _DayCell extends StatelessWidget {
-  _DayCell(this.date, this.visiblePageDate);
+  _DayCell(this.date, this.visiblePageDate, this.dateTextStyle);
 
   final DateTime date;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +74,15 @@ class _DayCell extends StatelessWidget {
             child: Column(
               children: [
                 isToday
-                    ? _TodayDayLabel(date: date)
-                    : _DayLabel(date: date, visiblePageDate: visiblePageDate),
+                    ? _TodayLabel(
+                        date: date,
+                        dateTextStyle: dateTextStyle,
+                      )
+                    : _DayLabel(
+                        date: date,
+                        visiblePageDate: visiblePageDate,
+                        dateTextStyle: dateTextStyle,
+                      ),
                 EventLabels(date),
               ],
             ),
@@ -79,17 +93,24 @@ class _DayCell extends StatelessWidget {
   }
 }
 
-class _TodayDayLabel extends StatelessWidget {
-  const _TodayDayLabel({
+class _TodayLabel extends StatelessWidget {
+  const _TodayLabel({
     Key key,
     @required this.date,
+    @required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     final config = Provider.of<TodayUIConfig>(context, listen: false);
+    final caption = Theme.of(context)
+        .textTheme
+        .caption
+        .copyWith(fontWeight: FontWeight.w500);
+    final textStyle = caption.merge(dateTextStyle) ?? caption;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       height: 20,
@@ -102,10 +123,8 @@ class _TodayDayLabel extends StatelessWidget {
         child: Text(
           date.day.toString(),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+          style: textStyle.copyWith(
             color: config.todayTextColor,
-            fontSize: 12,
           ),
         ),
       ),
@@ -118,24 +137,31 @@ class _DayLabel extends StatelessWidget {
     Key key,
     @required this.date,
     @required this.visiblePageDate,
+    @required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
   final DateTime visiblePageDate;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     final isCurrentMonth = visiblePageDate.month == date.month;
-    final colorScheme = Theme.of(context).textTheme.bodyText1.color;
+    final caption = Theme.of(context).textTheme.caption.copyWith(
+        fontWeight: FontWeight.w500,
+        color: Theme.of(context).colorScheme.onSurface);
+    final textStyle = caption.merge(dateTextStyle) ?? caption;
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
       height: dayLabelContentHeight.toDouble(),
       child: Text(
         date.day.toString(),
         textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: isCurrentMonth ? colorScheme : colorScheme.withOpacity(0.4)),
+        style: textStyle.copyWith(
+          color: isCurrentMonth
+              ? textStyle.color
+              : textStyle.color.withOpacity(0.4),
+        ),
       ),
     );
   }

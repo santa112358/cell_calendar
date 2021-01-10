@@ -33,6 +33,7 @@ class CellCalendar extends StatelessWidget {
     this.todayTextColor = Colors.white,
     this.daysOfTheWeekBuilder,
     this.monthYearLabelBuilder,
+    this.dateTextStyle,
   });
 
   /// Builder to show days of the week labels
@@ -42,6 +43,8 @@ class CellCalendar extends StatelessWidget {
   final daysBuilder daysOfTheWeekBuilder;
 
   final monthYearBuilder monthYearLabelBuilder;
+
+  final TextStyle dateTextStyle;
 
   final List<CalendarEvent> events;
   final void Function(DateTime firstDate, DateTime lastDate) onPageChanged;
@@ -68,6 +71,7 @@ class CellCalendar extends StatelessWidget {
       child: _CalendarPageView(
         daysOfTheWeekBuilder,
         monthYearLabelBuilder,
+        dateTextStyle,
       ),
     );
   }
@@ -75,10 +79,12 @@ class CellCalendar extends StatelessWidget {
 
 /// Shows [MonthYearLabel] and PageView of [_CalendarPage]
 class _CalendarPageView extends StatelessWidget {
-  _CalendarPageView(this.daysOfTheWeekBuilder, this.monthYearLabelBuilder);
+  _CalendarPageView(this.daysOfTheWeekBuilder, this.monthYearLabelBuilder,
+      this.dateTextStyle);
 
   final daysBuilder daysOfTheWeekBuilder;
   final monthYearBuilder monthYearLabelBuilder;
+  final TextStyle dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -88,15 +94,19 @@ class _CalendarPageView extends StatelessWidget {
         MonthYearLabel(monthYearLabelBuilder),
         Expanded(
           child: PageView.builder(
-              controller: PageController(initialPage: 1200),
-              itemBuilder: (context, index) {
-                return _CalendarPage(
-                    index.visibleDateTime, daysOfTheWeekBuilder);
-              },
-              onPageChanged: (index) {
-                Provider.of<CalendarStateController>(context, listen: false)
-                    .onPageChanged(index);
-              }),
+            controller: PageController(initialPage: 1200),
+            itemBuilder: (context, index) {
+              return _CalendarPage(
+                index.visibleDateTime,
+                daysOfTheWeekBuilder,
+                dateTextStyle,
+              );
+            },
+            onPageChanged: (index) {
+              Provider.of<CalendarStateController>(context, listen: false)
+                  .onPageChanged(index);
+            },
+          ),
         ),
       ],
     );
@@ -109,12 +119,14 @@ class _CalendarPageView extends StatelessWidget {
 class _CalendarPage extends StatelessWidget {
   const _CalendarPage(
     this.visiblePageDate,
-    this.daysOfTheWeekBuilder, {
+    this.daysOfTheWeekBuilder,
+    this.dateTextStyle, {
     Key key,
   }) : super(key: key);
 
   final DateTime visiblePageDate;
   final daysBuilder daysOfTheWeekBuilder;
+  final TextStyle dateTextStyle;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
     final List<DateTime> result = [];
@@ -137,29 +149,20 @@ class _CalendarPage extends StatelessWidget {
     return Column(
       children: [
         DaysOfTheWeek(daysOfTheWeekBuilder),
-        DaysRow(
-          dates: days.getRange(0, 7).toList(),
-          visiblePageDate: visiblePageDate,
-        ),
-        DaysRow(
-          dates: days.getRange(7, 14).toList(),
-          visiblePageDate: visiblePageDate,
-        ),
-        DaysRow(
-          dates: days.getRange(14, 21).toList(),
-          visiblePageDate: visiblePageDate,
-        ),
-        DaysRow(
-          dates: days.getRange(21, 28).toList(),
-          visiblePageDate: visiblePageDate,
-        ),
-        DaysRow(
-          dates: days.getRange(28, 35).toList(),
-          visiblePageDate: visiblePageDate,
-        ),
-        DaysRow(
-          dates: days.getRange(35, 42).toList(),
-          visiblePageDate: visiblePageDate,
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(
+              6,
+              (index) {
+                return DaysRow(
+                  visiblePageDate: visiblePageDate,
+                  dates: days.getRange(index * 7, (index + 1) * 7).toList(),
+                  dateTextStyle: dateTextStyle,
+                );
+              },
+            ),
+          ),
         ),
       ],
     );
