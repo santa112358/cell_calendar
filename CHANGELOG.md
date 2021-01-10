@@ -1,3 +1,6 @@
+## 0.3.0
+* Make it available to select textStyle of date cell
+
 ## 0.2.0
 * Add builder callbacks for customization of labels.
 
