@@ -74,7 +74,7 @@ class _DayCell extends StatelessWidget {
             child: Column(
               children: [
                 isToday
-                    ? _TodayDayLabel(
+                    ? _TodayLabel(
                         date: date,
                         dateTextStyle: dateTextStyle,
                       )
@@ -93,8 +93,8 @@ class _DayCell extends StatelessWidget {
   }
 }
 
-class _TodayDayLabel extends StatelessWidget {
-  const _TodayDayLabel({
+class _TodayLabel extends StatelessWidget {
+  const _TodayLabel({
     Key key,
     @required this.date,
     @required this.dateTextStyle,
@@ -106,6 +106,9 @@ class _TodayDayLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = Provider.of<TodayUIConfig>(context, listen: false);
+    final caption = Theme.of(context).textTheme.caption;
+    final textStyle = dateTextStyle?.merge(caption) ??
+        caption.copyWith(fontWeight: FontWeight.w500);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       height: 20,
@@ -118,10 +121,8 @@ class _TodayDayLabel extends StatelessWidget {
         child: Text(
           date.day.toString(),
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+          style: textStyle.copyWith(
             color: config.todayTextColor,
-            fontSize: 12,
           ),
         ),
       ),
@@ -144,16 +145,22 @@ class _DayLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCurrentMonth = visiblePageDate.month == date.month;
-    final colorScheme = Theme.of(context).textTheme.bodyText1.color;
+    final caption = Theme.of(context).textTheme.caption;
+    final textStyle = dateTextStyle?.merge(caption) ??
+        caption.copyWith(
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.onSurface);
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
       height: dayLabelContentHeight.toDouble(),
       child: Text(
         date.day.toString(),
         textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: isCurrentMonth ? colorScheme : colorScheme.withOpacity(0.4)),
+        style: textStyle.copyWith(
+          color: isCurrentMonth
+              ? textStyle.color
+              : textStyle.color.withOpacity(0.4),
+        ),
       ),
     );
   }
