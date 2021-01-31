@@ -28,12 +28,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _sampleEvents = sampleEvents();
-
+    final cellCalendarPageController = CellCalendarPageController();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
       body: CellCalendar(
+        cellCalendarPageController: cellCalendarPageController,
         events: _sampleEvents,
         daysOfTheWeekBuilder: (dayIndex) {
           final labels = ["S", "M", "T", "W", "T", "F", "S"];
@@ -52,13 +53,25 @@ class MyHomePage extends StatelessWidget {
           final year = datetime.year.toString();
           final month = datetime.month.toString();
           return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "$month, $year",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "$month, $year",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () {
+                    cellCalendarPageController.jumpToDate(DateTime.now());
+                  },
+                )
+              ],
             ),
           );
         },

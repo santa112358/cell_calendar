@@ -10,6 +10,17 @@ import 'controllers/calendar_state_controller.dart';
 import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
 
+class CellCalendarPageController extends PageController {
+  CellCalendarPageController() : super(initialPage: 1200);
+
+  void jumpToDate(DateTime date) {
+    final currentDate = DateTime.now();
+    final monthDif =
+        (date.year - currentDate.year) * 12 + (date.month - currentDate.month);
+    super.jumpToPage(1200 + monthDif);
+  }
+}
+
 typedef daysBuilder = Widget Function(int dayIndex);
 
 typedef monthYearBuilder = Widget Function(DateTime visibleDateTime);
@@ -26,6 +37,7 @@ class TodayUIConfig {
 /// Expected to be used in full screen
 class CellCalendar extends StatelessWidget {
   CellCalendar({
+    this.cellCalendarPageController,
     this.events = const [],
     this.onPageChanged,
     this.onCellTapped,
@@ -35,6 +47,8 @@ class CellCalendar extends StatelessWidget {
     this.monthYearLabelBuilder,
     this.dateTextStyle,
   });
+
+  final CellCalendarPageController cellCalendarPageController;
 
   /// Builder to show days of the week labels
   ///
@@ -72,6 +86,7 @@ class CellCalendar extends StatelessWidget {
         daysOfTheWeekBuilder,
         monthYearLabelBuilder,
         dateTextStyle,
+        cellCalendarPageController,
       ),
     );
   }
@@ -79,12 +94,17 @@ class CellCalendar extends StatelessWidget {
 
 /// Shows [MonthYearLabel] and PageView of [_CalendarPage]
 class _CalendarPageView extends StatelessWidget {
-  _CalendarPageView(this.daysOfTheWeekBuilder, this.monthYearLabelBuilder,
-      this.dateTextStyle);
+  _CalendarPageView(
+    this.daysOfTheWeekBuilder,
+    this.monthYearLabelBuilder,
+    this.dateTextStyle,
+    this.cellCalendarPageController,
+  );
 
   final daysBuilder daysOfTheWeekBuilder;
   final monthYearBuilder monthYearLabelBuilder;
   final TextStyle dateTextStyle;
+  final CellCalendarPageController cellCalendarPageController;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +114,8 @@ class _CalendarPageView extends StatelessWidget {
         MonthYearLabel(monthYearLabelBuilder),
         Expanded(
           child: PageView.builder(
-            controller: PageController(initialPage: 1200),
+            controller:
+                cellCalendarPageController ?? CellCalendarPageController(),
             itemBuilder: (context, index) {
               return _CalendarPage(
                 index.visibleDateTime,
