@@ -6,7 +6,7 @@ const int initialPageIndex = 1200;
 /// Extension to show accurate date in the calendar by current index of pageView
 extension DateExtension on int {
   int get fromInitialIndex {
-    return this - 1200;
+    return this - initialPageIndex;
   }
 
   Duration get daysDuration {
@@ -34,7 +34,7 @@ extension DateExtension on int {
 
   /// Return year and month to be shown by the currentIndex of pageView
   DateTime get visibleDateTime {
-    final monthDif = this - 1200;
+    final monthDif = this - initialPageIndex;
     final visibleYear = _visibleYear(monthDif);
     final visibleMonth = _visibleMonth(monthDif);
     return DateTime(visibleYear, visibleMonth);

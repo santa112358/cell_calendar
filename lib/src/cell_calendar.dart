@@ -7,19 +7,9 @@ import 'components/days_of_the_week.dart';
 import 'components/days_row/days_row.dart';
 import 'components/month_year_label.dart';
 import 'controllers/calendar_state_controller.dart';
+import 'controllers/cell_calendar_page_controller.dart';
 import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
-
-class CellCalendarPageController extends PageController {
-  CellCalendarPageController() : super(initialPage: 1200);
-
-  void jumpToDate(DateTime date) {
-    final currentDate = DateTime.now();
-    final monthDif =
-        (date.year - currentDate.year) * 12 + (date.month - currentDate.month);
-    super.jumpToPage(1200 + monthDif);
-  }
-}
 
 typedef daysBuilder = Widget Function(int dayIndex);
 
