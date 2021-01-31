@@ -11,7 +11,7 @@ class CellCalendarPageController extends PageController {
     super.jumpToPage(initialPageIndex + monthDif);
   }
 
-  void animateToDate(
+  Future<void> animateToDate(
     DateTime date, {
     @required Duration duration,
     @required Curve curve,
@@ -19,7 +19,20 @@ class CellCalendarPageController extends PageController {
     final currentDate = DateTime.now();
     final monthDif =
         (date.year - currentDate.year) * 12 + (date.month - currentDate.month);
-    super.animateToPage(initialPageIndex + monthDif,
+    return super.animateToPage(initialPageIndex + monthDif,
+        duration: duration, curve: curve);
+  }
+
+  /// [jumpToDate] is recommended
+  @override
+  void jumpToPage(int page) {
+    super.jumpToPage(initialPageIndex + page);
+  }
+
+  /// [animateToDate] is recommended
+  @override
+  Future<void> animateToPage(int page, {Duration duration, Curve curve}) {
+    return super.animateToPage(initialPageIndex + page,
         duration: duration, curve: curve);
   }
 }
