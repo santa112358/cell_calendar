@@ -51,24 +51,29 @@ class MyHomePage extends StatelessWidget {
         },
         monthYearLabelBuilder: (datetime) {
           final year = datetime.year.toString();
-          final month = datetime.month.toString();
+          final month = datetime.month.monthName;
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const SizedBox(width: 16),
                 Text(
-                  "$month, $year",
+                  "$month  $year",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const Spacer(),
                 IconButton(
                   padding: EdgeInsets.zero,
                   icon: Icon(Icons.calendar_today),
                   onPressed: () {
-                    cellCalendarPageController.jumpToDate(DateTime.now());
+                    cellCalendarPageController.animateToDate(
+                      DateTime.now(),
+                      curve: Curves.linear,
+                      duration: Duration(milliseconds: 300),
+                    );
                   },
                 )
               ],
@@ -110,7 +115,7 @@ class MyHomePage extends StatelessWidget {
           /// Called when the page was changed
           /// Fetch additional events by using the range between [firstDate] and [lastDate] if you want
         },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
