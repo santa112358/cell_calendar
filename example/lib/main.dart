@@ -28,12 +28,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _sampleEvents = sampleEvents();
-
+    final cellCalendarPageController = CellCalendarPageController();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
       body: CellCalendar(
+        cellCalendarPageController: cellCalendarPageController,
         events: _sampleEvents,
         daysOfTheWeekBuilder: (dayIndex) {
           final labels = ["S", "M", "T", "W", "T", "F", "S"];
@@ -50,15 +51,32 @@ class MyHomePage extends StatelessWidget {
         },
         monthYearLabelBuilder: (datetime) {
           final year = datetime.year.toString();
-          final month = datetime.month.toString();
+          final month = datetime.month.monthName;
           return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "$month, $year",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              children: [
+                const SizedBox(width: 16),
+                Text(
+                  "$month  $year",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () {
+                    cellCalendarPageController.animateToDate(
+                      DateTime.now(),
+                      curve: Curves.linear,
+                      duration: Duration(milliseconds: 300),
+                    );
+                  },
+                )
+              ],
             ),
           );
         },
@@ -97,7 +115,7 @@ class MyHomePage extends StatelessWidget {
           /// Called when the page was changed
           /// Fetch additional events by using the range between [firstDate] and [lastDate] if you want
         },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

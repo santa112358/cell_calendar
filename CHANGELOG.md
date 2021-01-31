@@ -1,3 +1,6 @@
+## 0.4.0
+* Add CellCalendarPageController to allow paging function
+
 ## 0.3.0
 * Make it available to select textStyle of date cell
 
