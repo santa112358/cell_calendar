@@ -13,8 +13,8 @@ class CellCalendarPageController extends PageController {
 
   Future<void> animateToDate(
     DateTime date, {
-    @required Duration duration,
-    @required Curve curve,
+    required Duration duration,
+    required Curve curve,
   }) {
     final currentDate = DateTime.now();
     final monthDif =
@@ -31,7 +31,7 @@ class CellCalendarPageController extends PageController {
 
   /// [animateToDate] is recommended
   @override
-  Future<void> animateToPage(int page, {Duration duration, Curve curve}) {
+  Future<void> animateToPage(int page, {required Duration duration, required Curve curve}) {
     return super.animateToPage(initialPageIndex + page,
         duration: duration, curve: curve);
   }

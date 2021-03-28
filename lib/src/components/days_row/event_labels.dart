@@ -62,7 +62,7 @@ class EventLabels extends StatelessWidget {
         return ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: eventsOnTheDay?.length ?? 0,
+          itemCount: eventsOnTheDay.length,
           itemBuilder: (context, index) {
             if (hasEnoughSpace) {
               return _EventLabel(eventsOnTheDay[index]);
