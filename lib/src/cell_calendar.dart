@@ -13,7 +13,7 @@ import 'date_extension.dart';
 
 typedef daysBuilder = Widget Function(int dayIndex);
 
-typedef monthYearBuilder = Widget Function(DateTime visibleDateTime);
+typedef monthYearBuilder = Widget Function(DateTime? visibleDateTime);
 
 class TodayUIConfig {
   final Color todayMarkColor;
@@ -38,21 +38,21 @@ class CellCalendar extends StatelessWidget {
     this.dateTextStyle,
   });
 
-  final CellCalendarPageController cellCalendarPageController;
+  final CellCalendarPageController? cellCalendarPageController;
 
   /// Builder to show days of the week labels
   ///
   /// 0 for Sunday, 6 for Saturday.
   /// By default, it returns English labels
-  final daysBuilder daysOfTheWeekBuilder;
+  final daysBuilder? daysOfTheWeekBuilder;
 
-  final monthYearBuilder monthYearLabelBuilder;
+  final monthYearBuilder? monthYearLabelBuilder;
 
-  final TextStyle dateTextStyle;
+  final TextStyle? dateTextStyle;
 
   final List<CalendarEvent> events;
-  final void Function(DateTime firstDate, DateTime lastDate) onPageChanged;
-  final void Function(DateTime) onCellTapped;
+  final void Function(DateTime firstDate, DateTime lastDate)? onPageChanged;
+  final void Function(DateTime)? onCellTapped;
   final Color todayMarkColor;
   final Color todayTextColor;
 
@@ -91,10 +91,10 @@ class _CalendarPageView extends StatelessWidget {
     this.cellCalendarPageController,
   );
 
-  final daysBuilder daysOfTheWeekBuilder;
-  final monthYearBuilder monthYearLabelBuilder;
-  final TextStyle dateTextStyle;
-  final CellCalendarPageController cellCalendarPageController;
+  final daysBuilder? daysOfTheWeekBuilder;
+  final monthYearBuilder? monthYearLabelBuilder;
+  final TextStyle? dateTextStyle;
+  final CellCalendarPageController? cellCalendarPageController;
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +132,12 @@ class _CalendarPage extends StatelessWidget {
     this.visiblePageDate,
     this.daysOfTheWeekBuilder,
     this.dateTextStyle, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final DateTime visiblePageDate;
-  final daysBuilder daysOfTheWeekBuilder;
-  final TextStyle dateTextStyle;
+  final daysBuilder? daysOfTheWeekBuilder;
+  final TextStyle? dateTextStyle;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
     final List<DateTime> result = [];

@@ -7,21 +7,21 @@ import '../date_extension.dart';
 /// Controller to call functions from argument like [onPageChanged] and [onCellTapped]
 class CalendarStateController extends ChangeNotifier {
   CalendarStateController({
-    @required this.events,
-    @required this.onPageChangedFromUserArgument,
-    @required this.onCellTappedFromUserArgument,
+    required this.events,
+    required this.onPageChangedFromUserArgument,
+    required this.onCellTappedFromUserArgument,
   }) {
     this._initialize();
   }
 
   final List<CalendarEvent> events;
 
-  final Function(DateTime firstDate, DateTime lastDate)
+  final Function(DateTime firstDate, DateTime lastDate)?
       onPageChangedFromUserArgument;
 
-  final void Function(DateTime) onCellTappedFromUserArgument;
+  final void Function(DateTime)? onCellTappedFromUserArgument;
 
-  DateTime currentDateTime;
+  DateTime? currentDateTime;
 
   void _initialize() {
     currentDateTime = DateTime.now();
@@ -31,8 +31,8 @@ class CalendarStateController extends ChangeNotifier {
   void onPageChanged(int index) {
     currentDateTime = index.visibleDateTime;
     if (onPageChangedFromUserArgument != null) {
-      final currentFirstDate = _getFirstDay(currentDateTime);
-      onPageChangedFromUserArgument(
+      final currentFirstDate = _getFirstDay(currentDateTime!);
+      onPageChangedFromUserArgument!(
           currentFirstDate, currentFirstDate.add(Duration(days: 41)));
     }
     notifyListeners();
@@ -55,7 +55,7 @@ class CalendarStateController extends ChangeNotifier {
 
   void onCellTapped(DateTime date) {
     if (onCellTappedFromUserArgument != null) {
-      onCellTappedFromUserArgument(date);
+      onCellTappedFromUserArgument!(date);
     }
   }
 }

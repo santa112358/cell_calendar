@@ -10,15 +10,15 @@ import 'measure_size.dart';
 /// Show the row of [_DayCell] cells with events
 class DaysRow extends StatelessWidget {
   const DaysRow({
-    @required this.visiblePageDate,
-    @required this.dates,
-    @required this.dateTextStyle,
-    Key key,
+    required this.visiblePageDate,
+    required this.dates,
+    required this.dateTextStyle,
+    Key? key,
   }) : super(key: key);
 
   final List<DateTime> dates;
   final DateTime visiblePageDate;
-  final TextStyle dateTextStyle;
+  final TextStyle? dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _DayCell extends StatelessWidget {
 
   final DateTime date;
   final DateTime visiblePageDate;
-  final TextStyle dateTextStyle;
+  final TextStyle? dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +68,7 @@ class _DayCell extends StatelessWidget {
           ),
           child: MeasureSize(
             onChange: (size) {
+              if (size == null) return;
               Provider.of<CellHeightController>(context, listen: false)
                   .onChanged(size);
             },
@@ -95,22 +96,22 @@ class _DayCell extends StatelessWidget {
 
 class _TodayLabel extends StatelessWidget {
   const _TodayLabel({
-    Key key,
-    @required this.date,
-    @required this.dateTextStyle,
+    Key? key,
+    required this.date,
+    required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
-  final TextStyle dateTextStyle;
+  final TextStyle? dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     final config = Provider.of<TodayUIConfig>(context, listen: false);
     final caption = Theme.of(context)
         .textTheme
-        .caption
+        .caption!
         .copyWith(fontWeight: FontWeight.w500);
-    final textStyle = caption.merge(dateTextStyle) ?? caption;
+    final textStyle = caption.merge(dateTextStyle);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 2),
       height: 20,
@@ -134,23 +135,23 @@ class _TodayLabel extends StatelessWidget {
 
 class _DayLabel extends StatelessWidget {
   const _DayLabel({
-    Key key,
-    @required this.date,
-    @required this.visiblePageDate,
-    @required this.dateTextStyle,
+    Key? key,
+    required this.date,
+    required this.visiblePageDate,
+    required this.dateTextStyle,
   }) : super(key: key);
 
   final DateTime date;
   final DateTime visiblePageDate;
-  final TextStyle dateTextStyle;
+  final TextStyle? dateTextStyle;
 
   @override
   Widget build(BuildContext context) {
     final isCurrentMonth = visiblePageDate.month == date.month;
-    final caption = Theme.of(context).textTheme.caption.copyWith(
+    final caption = Theme.of(context).textTheme.caption!.copyWith(
         fontWeight: FontWeight.w500,
         color: Theme.of(context).colorScheme.onSurface);
-    final textStyle = caption.merge(dateTextStyle) ?? caption;
+    final textStyle = caption.merge(dateTextStyle);
     return Container(
       margin: EdgeInsets.symmetric(vertical: dayLabelVerticalMargin.toDouble()),
       height: dayLabelContentHeight.toDouble(),
@@ -160,7 +161,7 @@ class _DayLabel extends StatelessWidget {
         style: textStyle.copyWith(
           color: isCurrentMonth
               ? textStyle.color
-              : textStyle.color.withOpacity(0.4),
+              : textStyle.color!.withOpacity(0.4),
         ),
       ),
     );
