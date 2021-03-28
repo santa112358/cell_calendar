@@ -1,3 +1,6 @@
+## 0.5.0
+* Support null safety
+
 ## 0.4.0
 * Add CellCalendarPageController to allow paging function
 
