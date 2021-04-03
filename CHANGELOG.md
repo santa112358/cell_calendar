@@ -1,3 +1,6 @@
+## 0.5.0+1
+* Reformat code to pass analytics
+
 ## 0.5.0
 * Support null safety
 

@@ -31,7 +31,11 @@ class CellCalendarPageController extends PageController {
 
   /// [animateToDate] is recommended
   @override
-  Future<void> animateToPage(int page, {required Duration duration, required Curve curve}) {
+  Future<void> animateToPage(
+    int page, {
+    required Duration duration,
+    required Curve curve,
+  }) {
     return super.animateToPage(initialPageIndex + page,
         duration: duration, curve: curve);
   }
