@@ -1,11 +1,12 @@
 name: cell_calendar
 description: Modern calendar widget with useful features. Enables to develop well designed calendar in a moment. Inspired by the UI of Google calendar.
-version: 0.5.0+1
+version: 0.6.0
 author: Santa Takahashi
 homepage: https://github.com/santa112358/cell_calendar
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.16.1 <3.0.0"
+  flutter: "2.10.3"
 
 dependencies:
   flutter:
