@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/calendar_state_controller.dart';
-import '../date_extension.dart';
 
 /// Label showing the date of current page
 class MonthYearLabel extends StatelessWidget {
@@ -12,7 +11,7 @@ class MonthYearLabel extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final monthYearBuilder? monthYearLabelBuilder;
+  final MonthYearBuilder? monthYearLabelBuilder;
 
   @override
   Widget build(BuildContext context) {
