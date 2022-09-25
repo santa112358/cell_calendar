@@ -1,4 +1,7 @@
-## 0.5.0+1
+## 0.7.0
+* Fix analysis problems
+
+## 0.6.0
 * Upgrade provider version
 
 ## 0.5.0+1
