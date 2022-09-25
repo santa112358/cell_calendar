@@ -1,0 +1,24 @@
+{
+  "projectName": "cell_calendar",
+  "projectOwner": "santa112358",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "santa112358",
+      "name": "Santa Takahashi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43510799?v=4",
+      "profile": "https://pub.dev/publishers/3tadev.work/packages",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
