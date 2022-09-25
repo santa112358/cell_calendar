@@ -18,6 +18,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "filonov",
+      "name": "Denis Filonov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/454340?v=4",
+      "profile": "https://filonov.pro/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

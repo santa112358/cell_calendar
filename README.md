@@ -120,6 +120,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center"><a href="https://pub.dev/publishers/3tadev.work/packages"><img src="https://avatars.githubusercontent.com/u/43510799?v=4?s=100" width="100px;" alt="Santa Takahashi"/><br /><sub><b>Santa Takahashi</b></sub></a><br /><a href="https://github.com/santa112358/cell_calendar/commits?author=santa112358" title="Code">💻</a></td>
+      <td align="center"><a href="https://filonov.pro/"><img src="https://avatars.githubusercontent.com/u/454340?v=4?s=100" width="100px;" alt="Denis Filonov"/><br /><sub><b>Denis Filonov</b></sub></a><br /><a href="https://github.com/santa112358/cell_calendar/commits?author=filonov" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
