@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +10,9 @@ import 'controllers/cell_calendar_page_controller.dart';
 import 'controllers/cell_height_controller.dart';
 import 'date_extension.dart';
 
-typedef daysBuilder = Widget Function(int dayIndex);
+typedef DaysBuilder = Widget Function(int dayIndex);
 
-typedef monthYearBuilder = Widget Function(DateTime? visibleDateTime);
+typedef MonthYearBuilder = Widget Function(DateTime? visibleDateTime);
 
 class TodayUIConfig {
   final Color todayMarkColor;
@@ -44,9 +43,9 @@ class CellCalendar extends StatelessWidget {
   ///
   /// 0 for Sunday, 6 for Saturday.
   /// By default, it returns English labels
-  final daysBuilder? daysOfTheWeekBuilder;
+  final DaysBuilder? daysOfTheWeekBuilder;
 
-  final monthYearBuilder? monthYearLabelBuilder;
+  final MonthYearBuilder? monthYearLabelBuilder;
 
   final TextStyle? dateTextStyle;
 
@@ -91,8 +90,8 @@ class _CalendarPageView extends StatelessWidget {
     this.cellCalendarPageController,
   );
 
-  final daysBuilder? daysOfTheWeekBuilder;
-  final monthYearBuilder? monthYearLabelBuilder;
+  final DaysBuilder? daysOfTheWeekBuilder;
+  final MonthYearBuilder? monthYearLabelBuilder;
   final TextStyle? dateTextStyle;
   final CellCalendarPageController? cellCalendarPageController;
 
@@ -136,7 +135,7 @@ class _CalendarPage extends StatelessWidget {
   }) : super(key: key);
 
   final DateTime visiblePageDate;
-  final daysBuilder? daysOfTheWeekBuilder;
+  final DaysBuilder? daysOfTheWeekBuilder;
   final TextStyle? dateTextStyle;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
