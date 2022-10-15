@@ -60,7 +60,7 @@ List<CalendarEvent> sampleEvents() {
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
-      eventName: "日本語",
+      eventName: "Task deadline",
       eventDate: today,
       eventTextStyle: eventTextStyle,
     ),
