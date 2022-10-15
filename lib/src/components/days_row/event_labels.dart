@@ -107,10 +107,7 @@ class _EventLabel extends StatelessWidget {
       color: event.eventBackgroundColor,
       child: Text(
         event.eventName,
-        style: TextStyle(
-            color: event.eventTextColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 11),
+        style: event.eventTextStyle,
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
       ),

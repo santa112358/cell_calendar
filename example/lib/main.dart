@@ -103,7 +103,7 @@ class MyHomePage extends StatelessWidget {
                               color: event.eventBackgroundColor,
                               child: Text(
                                 event.eventName,
-                                style: TextStyle(color: event.eventTextColor),
+                                style: event.eventTextStyle,
                               ),
                             ),
                           )

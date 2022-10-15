@@ -7,14 +7,14 @@ class CalendarEvent {
   CalendarEvent({
     required this.eventName,
     required this.eventDate,
+    required this.eventTextStyle,
     this.eventBackgroundColor = Colors.blue,
-    this.eventTextColor = Colors.white,
     this.eventID,
   });
 
   final String eventName;
+  final TextStyle eventTextStyle;
   final DateTime eventDate;
   final String? eventID;
   final Color eventBackgroundColor;
-  final Color eventTextColor;
 }
