@@ -1,9 +1,7 @@
 import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
 
-/// Days of the week
-///
-// TODO: Internationalize the days of the week
+/// Default days of the week
 const List<String> _DaysOfTheWeek = [
   'Sun',
   'Mon',

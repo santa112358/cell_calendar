@@ -1,3 +1,7 @@
+## 0.8.0
+* Use riverpod for state management
+* Fix problem not reloading events
+
 ## 0.7.0
 * Fix analysis problems
 

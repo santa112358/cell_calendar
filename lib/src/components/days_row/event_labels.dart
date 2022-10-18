@@ -16,7 +16,6 @@ const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 /// Get events to be shown from [CalendarStateController]
 ///
 /// Shows accurate number of [_EventLabel] by the height of the parent cell
-/// notified from [CellHeightController]
 class EventLabels extends HookConsumerWidget {
   EventLabels({
     required this.date,
