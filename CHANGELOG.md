@@ -1,4 +1,5 @@
 ## 0.8.0
+* Fix CalendarEvent schema
 * Use riverpod for state management
 * Fix problem not reloading events
 
