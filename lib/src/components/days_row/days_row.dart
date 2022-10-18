@@ -1,24 +1,32 @@
 import 'package:cell_calendar/cell_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../controllers/calendar_state_controller.dart';
-import '../../controllers/cell_height_controller.dart';
 import 'event_labels.dart';
 import 'measure_size.dart';
+
+final cellHeightProvider = StateProvider<double?>((ref) => null);
 
 /// Show the row of [_DayCell] cells with events
 class DaysRow extends StatelessWidget {
   const DaysRow({
+    Key? key,
     required this.visiblePageDate,
     required this.dates,
     required this.dateTextStyle,
-    Key? key,
+    required this.onCellTapped,
+    required this.todayMarkColor,
+    required this.todayTextColor,
+    required this.events,
   }) : super(key: key);
 
   final List<DateTime> dates;
   final DateTime visiblePageDate;
   final TextStyle? dateTextStyle;
+  final void Function(DateTime)? onCellTapped;
+  final Color todayMarkColor;
+  final Color todayTextColor;
+  final List<CalendarEvent> events;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +34,13 @@ class DaysRow extends StatelessWidget {
       child: Row(
         children: dates.map((date) {
           return _DayCell(
-            date,
-            visiblePageDate,
-            dateTextStyle,
+            date: date,
+            visiblePageDate: visiblePageDate,
+            dateTextStyle: dateTextStyle,
+            onCellTapped: onCellTapped,
+            todayMarkColor: todayMarkColor,
+            todayTextColor: todayTextColor,
+            events: events,
           );
         }).toList(),
       ),
@@ -39,15 +51,27 @@ class DaysRow extends StatelessWidget {
 /// Cell of calendar.
 ///
 /// Its height is circulated by [MeasureSize] and notified by [CellHeightController]
-class _DayCell extends StatelessWidget {
-  _DayCell(this.date, this.visiblePageDate, this.dateTextStyle);
+class _DayCell extends HookConsumerWidget {
+  _DayCell({
+    required this.date,
+    required this.visiblePageDate,
+    required this.dateTextStyle,
+    required this.onCellTapped,
+    required this.todayMarkColor,
+    required this.todayTextColor,
+    required this.events,
+  });
 
   final DateTime date;
   final DateTime visiblePageDate;
   final TextStyle? dateTextStyle;
+  final void Function(DateTime)? onCellTapped;
+  final Color todayMarkColor;
+  final Color todayTextColor;
+  final List<CalendarEvent> events;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final today = DateTime.now();
     final isToday = date.year == today.year &&
         date.month == today.month &&
@@ -55,8 +79,7 @@ class _DayCell extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Provider.of<CalendarStateController>(context, listen: false)
-              .onCellTapped(date);
+          onCellTapped?.call(date);
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -68,9 +91,12 @@ class _DayCell extends StatelessWidget {
           ),
           child: MeasureSize(
             onChange: (size) {
-              if (size == null) return;
-              Provider.of<CellHeightController>(context, listen: false)
-                  .onChanged(size);
+              final sizeState = ref.read(cellHeightProvider);
+              if (sizeState != null || size == null) {
+                return;
+              }
+              final notifier = ref.read(cellHeightProvider.notifier);
+              notifier.state = size.height;
             },
             child: Column(
               children: [
@@ -78,13 +104,18 @@ class _DayCell extends StatelessWidget {
                     ? _TodayLabel(
                         date: date,
                         dateTextStyle: dateTextStyle,
+                        todayMarkColor: todayMarkColor,
+                        todayTextColor: todayTextColor,
                       )
                     : _DayLabel(
                         date: date,
                         visiblePageDate: visiblePageDate,
                         dateTextStyle: dateTextStyle,
                       ),
-                EventLabels(date),
+                EventLabels(
+                  date: date,
+                  events: events,
+                ),
               ],
             ),
           ),
@@ -99,14 +130,17 @@ class _TodayLabel extends StatelessWidget {
     Key? key,
     required this.date,
     required this.dateTextStyle,
+    required this.todayMarkColor,
+    required this.todayTextColor,
   }) : super(key: key);
 
   final DateTime date;
   final TextStyle? dateTextStyle;
+  final Color todayMarkColor;
+  final Color todayTextColor;
 
   @override
   Widget build(BuildContext context) {
-    final config = Provider.of<TodayUIConfig>(context, listen: false);
     final caption = Theme.of(context)
         .textTheme
         .caption!
@@ -118,14 +152,14 @@ class _TodayLabel extends StatelessWidget {
       width: 20,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: config.todayMarkColor,
+        color: todayMarkColor,
       ),
       child: Center(
         child: Text(
           date.day.toString(),
           textAlign: TextAlign.center,
           style: textStyle.copyWith(
-            color: config.todayTextColor,
+            color: todayTextColor,
           ),
         ),
       ),

@@ -1,9 +1,8 @@
+import 'package:cell_calendar/src/components/days_row/days_row.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../calendar_event.dart';
-import '../../controllers/calendar_state_controller.dart';
-import '../../controllers/cell_height_controller.dart';
 
 /// Numbers to return accurate events in the cell.
 const dayLabelContentHeight = 16;
@@ -18,10 +17,14 @@ const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 ///
 /// Shows accurate number of [_EventLabel] by the height of the parent cell
 /// notified from [CellHeightController]
-class EventLabels extends StatelessWidget {
-  EventLabels(this.date);
+class EventLabels extends HookConsumerWidget {
+  EventLabels({
+    required this.date,
+    required this.events,
+  });
 
   final DateTime date;
+  final List<CalendarEvent> events;
 
   List<CalendarEvent> _eventsOnTheDay(
       DateTime date, List<CalendarEvent> events) {
@@ -48,46 +51,40 @@ class EventLabels extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final cellHeight = Provider.of<CellHeightController>(context).cellHeight;
-    return Selector<CalendarStateController, List<CalendarEvent>>(
-      builder: (context, events, _) {
-        if (cellHeight == null) {
-          return const SizedBox.shrink();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cellHeight = ref.watch(cellHeightProvider);
+    if (cellHeight == null) {
+      return const SizedBox.shrink();
+    }
+    final eventsOnTheDay = _eventsOnTheDay(date, events);
+    final hasEnoughSpace = _hasEnoughSpace(cellHeight, eventsOnTheDay.length);
+    final maxIndex = _maxIndex(cellHeight, eventsOnTheDay.length);
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: eventsOnTheDay.length,
+      itemBuilder: (context, index) {
+        if (hasEnoughSpace) {
+          return _EventLabel(eventsOnTheDay[index]);
+        } else if (index < maxIndex) {
+          return _EventLabel(eventsOnTheDay[index]);
+        } else if (index == maxIndex) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _EventLabel(
+                eventsOnTheDay[index],
+              ),
+              Icon(
+                Icons.more_horiz,
+                size: 13,
+              )
+            ],
+          );
+        } else {
+          return SizedBox.shrink();
         }
-        final eventsOnTheDay = _eventsOnTheDay(date, events);
-        final hasEnoughSpace =
-            _hasEnoughSpace(cellHeight, eventsOnTheDay.length);
-        final maxIndex = _maxIndex(cellHeight, eventsOnTheDay.length);
-        return ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: eventsOnTheDay.length,
-          itemBuilder: (context, index) {
-            if (hasEnoughSpace) {
-              return _EventLabel(eventsOnTheDay[index]);
-            } else if (index < maxIndex) {
-              return _EventLabel(eventsOnTheDay[index]);
-            } else if (index == maxIndex) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _EventLabel(
-                    eventsOnTheDay[index],
-                  ),
-                  Icon(
-                    Icons.more_horiz,
-                    size: 13,
-                  )
-                ],
-              );
-            } else {
-              return SizedBox.shrink();
-            }
-          },
-        );
       },
-      selector: (context, controller) => controller.events,
     );
   }
 }
