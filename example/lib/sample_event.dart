@@ -3,59 +3,59 @@ import 'package:flutter/material.dart';
 
 List<CalendarEvent> sampleEvents() {
   final today = DateTime.now();
-  final eventTextStyle = TextStyle(
+  const eventTextStyle = TextStyle(
     fontSize: 9,
     color: Colors.white,
   );
   final sampleEvents = [
     CalendarEvent(
       eventName: "New iPhone",
-      eventDate: today.add(Duration(days: -42)),
+      eventDate: today.add(const Duration(days: -42)),
       eventBackgroundColor: Colors.black,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Writing test",
-      eventDate: today.add(Duration(days: -30)),
+      eventDate: today.add(const Duration(days: -30)),
       eventBackgroundColor: Colors.deepOrange,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Play soccer",
-      eventDate: today.add(Duration(days: -7)),
+      eventDate: today.add(const Duration(days: -7)),
       eventBackgroundColor: Colors.greenAccent,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Learn about history",
       eventDate: today.add(
-        Duration(days: -7),
+        const Duration(days: -7),
       ),
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Buy new keyboard",
       eventDate: today.add(
-        Duration(days: -7),
+        const Duration(days: -7),
       ),
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Walk around the park",
-      eventDate: today.add(Duration(days: -7)),
+      eventDate: today.add(const Duration(days: -7)),
       eventBackgroundColor: Colors.deepOrange,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Buy a present for Rebecca",
-      eventDate: today.add(Duration(days: -7)),
+      eventDate: today.add(const Duration(days: -7)),
       eventBackgroundColor: Colors.pink,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Firebase",
       eventDate: today.add(
-        Duration(days: -7),
+        const Duration(days: -7),
       ),
       eventTextStyle: eventTextStyle,
     ),
@@ -67,59 +67,59 @@ List<CalendarEvent> sampleEvents() {
     CalendarEvent(
       eventName: "Jon's Birthday",
       eventDate: today.add(
-        Duration(days: 3),
+        const Duration(days: 3),
       ),
       eventBackgroundColor: Colors.green,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Date with Rebecca",
-      eventDate: today.add(Duration(days: 7)),
+      eventDate: today.add(const Duration(days: 7)),
       eventBackgroundColor: Colors.pink,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Start to study Spanish",
       eventDate: today.add(
-        Duration(days: 13),
+        const Duration(days: 13),
       ),
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Have lunch with Mike",
-      eventDate: today.add(Duration(days: 13)),
+      eventDate: today.add(const Duration(days: 13)),
       eventBackgroundColor: Colors.green,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Buy new Play Station software",
-      eventDate: today.add(Duration(days: 13)),
+      eventDate: today.add(const Duration(days: 13)),
       eventBackgroundColor: Colors.indigoAccent,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Update my flutter package",
       eventDate: today.add(
-        Duration(days: 13),
+        const Duration(days: 13),
       ),
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Watch movies in my house",
       eventDate: today.add(
-        Duration(days: 21),
+        const Duration(days: 21),
       ),
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Medical Checkup",
-      eventDate: today.add(Duration(days: 30)),
+      eventDate: today.add(const Duration(days: 30)),
       eventBackgroundColor: Colors.red,
       eventTextStyle: eventTextStyle,
     ),
     CalendarEvent(
       eventName: "Gym",
-      eventDate: today.add(Duration(days: 42)),
+      eventDate: today.add(const Duration(days: 42)),
       eventBackgroundColor: Colors.indigoAccent,
       eventTextStyle: eventTextStyle,
     ),

@@ -3,10 +3,12 @@ import 'package:example/sample_event.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -16,18 +18,22 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'cell_calendar example'),
+      home: const MyHomePage(title: 'cell_calendar example'),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({
+    super.key,
+    required this.title,
+  });
+
   final String title;
 
   @override
   Widget build(BuildContext context) {
-    final _sampleEvents = sampleEvents();
+    final events = sampleEvents();
     final cellCalendarPageController = CellCalendarPageController();
     return Scaffold(
       appBar: AppBar(
@@ -35,14 +41,14 @@ class MyHomePage extends StatelessWidget {
       ),
       body: CellCalendar(
         cellCalendarPageController: cellCalendarPageController,
-        events: _sampleEvents,
+        events: events,
         daysOfTheWeekBuilder: (dayIndex) {
           final labels = ["S", "M", "T", "W", "T", "F", "S"];
           return Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: Text(
               labels[dayIndex],
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -50,7 +56,7 @@ class MyHomePage extends StatelessWidget {
           );
         },
         monthYearLabelBuilder: (datetime) {
-          final year = datetime.year.toString();
+          final year = datetime!.year.toString();
           final month = datetime.month.monthName;
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -59,7 +65,7 @@ class MyHomePage extends StatelessWidget {
                 const SizedBox(width: 16),
                 Text(
                   "$month  $year",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -67,12 +73,12 @@ class MyHomePage extends StatelessWidget {
                 const Spacer(),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  icon: Icon(Icons.calendar_today),
+                  icon: const Icon(Icons.calendar_today),
                   onPressed: () {
                     cellCalendarPageController.animateToDate(
                       DateTime.now(),
                       curve: Curves.linear,
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                     );
                   },
                 )
@@ -81,7 +87,7 @@ class MyHomePage extends StatelessWidget {
           );
         },
         onCellTapped: (date) {
-          final eventsOnTheDate = _sampleEvents.where((event) {
+          final eventsOnTheDate = events.where((event) {
             final eventDate = event.eventDate;
             return eventDate.year == date.year &&
                 eventDate.month == date.month &&
@@ -90,16 +96,15 @@ class MyHomePage extends StatelessWidget {
           showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                    title:
-                        Text(date.month.monthName + " " + date.day.toString()),
+                    title: Text("${date.month.monthName} ${date.day}"),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: eventsOnTheDate
                           .map(
                             (event) => Container(
                               width: double.infinity,
-                              padding: EdgeInsets.all(4),
-                              margin: EdgeInsets.only(bottom: 12),
+                              padding: const EdgeInsets.all(4),
+                              margin: const EdgeInsets.only(bottom: 12),
                               color: event.eventBackgroundColor,
                               child: Text(
                                 event.eventName,

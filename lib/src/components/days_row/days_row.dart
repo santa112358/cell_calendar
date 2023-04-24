@@ -143,7 +143,7 @@ class _TodayLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final caption = Theme.of(context)
         .textTheme
-        .caption!
+        .bodySmall!
         .copyWith(fontWeight: FontWeight.w500);
     final textStyle = caption.merge(dateTextStyle);
     return Container(
@@ -182,7 +182,7 @@ class _DayLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCurrentMonth = visiblePageDate.month == date.month;
-    final caption = Theme.of(context).textTheme.caption!.copyWith(
+    final caption = Theme.of(context).textTheme.bodySmall!.copyWith(
         fontWeight: FontWeight.w500,
         color: Theme.of(context).colorScheme.onSurface);
     final textStyle = caption.merge(dateTextStyle);
