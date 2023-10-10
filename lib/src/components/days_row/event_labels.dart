@@ -5,11 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../calendar_event.dart';
 
 /// Numbers to return accurate events in the cell.
-const dayLabelContentHeight = 16;
+const dayLabelContentHeight = 32;
 const dayLabelVerticalMargin = 4;
 const _dayLabelHeight = dayLabelContentHeight + (dayLabelVerticalMargin * 2);
 
-const _eventLabelContentHeight = 13;
+const _eventLabelContentHeight = 26;
 const _eventLabelBottomMargin = 3;
 const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 
