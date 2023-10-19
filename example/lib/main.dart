@@ -1,4 +1,5 @@
-import 'package:cell_calendar/cell_calendar.dart';
+// ignore: depend_on_referenced_packages
+import 'package:cell_calendar_plus/cell_calendar_plus.dart';
 import 'package:example/sample_event.dart';
 import 'package:flutter/material.dart';
 

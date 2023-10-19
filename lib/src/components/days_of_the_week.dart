@@ -1,4 +1,4 @@
-import 'package:cell_calendar/cell_calendar.dart';
+import 'package:cell_calendar_plus/cell_calendar_plus.dart';
 import 'package:flutter/material.dart';
 
 /// Default days of the week

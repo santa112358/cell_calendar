@@ -1,4 +1,4 @@
-import 'package:cell_calendar/src/date_extension.dart';
+import 'package:cell_calendar_plus/src/date_extension.dart';
 import 'package:flutter/material.dart';
 
 class CellCalendarPageController extends PageController {
