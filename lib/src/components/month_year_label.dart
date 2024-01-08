@@ -1,4 +1,4 @@
-import 'package:cell_calendar/cell_calendar.dart';
+import 'package:cell_calendar_plus/cell_calendar_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

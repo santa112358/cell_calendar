@@ -1,15 +1,15 @@
-import 'package:cell_calendar/src/components/days_row/days_row.dart';
+import 'package:cell_calendar_plus/src/components/days_row/days_row.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../calendar_event.dart';
 
 /// Numbers to return accurate events in the cell.
-const dayLabelContentHeight = 16;
+const dayLabelContentHeight = 32;
 const dayLabelVerticalMargin = 4;
 const _dayLabelHeight = dayLabelContentHeight + (dayLabelVerticalMargin * 2);
 
-const _eventLabelContentHeight = 13;
+const _eventLabelContentHeight = 26;
 const _eventLabelBottomMargin = 3;
 const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 
@@ -97,15 +97,22 @@ class _EventLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 4, bottom: 3),
-      height: 13,
+      padding: EdgeInsets.only(left: 7),  // Adicionando padding à esquerda
+      height: 21,
       width: double.infinity,
-      color: event.eventBackgroundColor,
-      child: Text(
-        event.eventName,
-        style: event.eventTextStyle,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
+      color: Colors.white,  // Cor de fundo branca
+      child: Center(
+        child: Text(
+          event.eventName,
+          style: TextStyle(
+            color: Colors.black,  // Texto preto
+          ),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      decoration: BoxDecoration(
+        border: Border(left: BorderSide(width: 7, color: event.eventBackgroundColor)),  // Borda à esquerda com largura de 7px e cor do evento
       ),
     );
   }
