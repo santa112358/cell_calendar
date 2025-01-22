@@ -18,6 +18,7 @@ class DaysRow extends StatelessWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    required this.customDateWidgets,
   }) : super(key: key);
 
   final List<DateTime> dates;
@@ -27,6 +28,7 @@ class DaysRow extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final Widget? Function(DateTime)? customDateWidgets;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class DaysRow extends StatelessWidget {
             todayMarkColor: todayMarkColor,
             todayTextColor: todayTextColor,
             events: events,
+            customDateWidgets: customDateWidgets,
           );
         }).toList(),
       ),
@@ -60,6 +63,7 @@ class _DayCell extends HookConsumerWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    required this.customDateWidgets,
   });
 
   final DateTime date;
@@ -69,6 +73,7 @@ class _DayCell extends HookConsumerWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final Widget? Function(DateTime)? customDateWidgets;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,6 +81,9 @@ class _DayCell extends HookConsumerWidget {
     final isToday = date.year == today.year &&
         date.month == today.month &&
         date.day == today.day;
+
+    final Widget? customWidget = customDateWidgets?.call(date);
+
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -100,18 +108,19 @@ class _DayCell extends HookConsumerWidget {
             },
             child: Column(
               children: [
-                isToday
-                    ? _TodayLabel(
-                        date: date,
-                        dateTextStyle: dateTextStyle,
-                        todayMarkColor: todayMarkColor,
-                        todayTextColor: todayTextColor,
-                      )
-                    : _DayLabel(
-                        date: date,
-                        visiblePageDate: visiblePageDate,
-                        dateTextStyle: dateTextStyle,
-                      ),
+                customWidget ??
+                    (isToday
+                        ? _TodayLabel(
+                            date: date,
+                            dateTextStyle: dateTextStyle,
+                            todayMarkColor: todayMarkColor,
+                            todayTextColor: todayTextColor,
+                          )
+                        : _DayLabel(
+                            date: date,
+                            visiblePageDate: visiblePageDate,
+                            dateTextStyle: dateTextStyle,
+                          )),
                 EventLabels(
                   date: date,
                   events: events,
