@@ -42,9 +42,6 @@ class MyHomePage extends StatelessWidget {
       body: CellCalendar(
         cellCalendarPageController: cellCalendarPageController,
         events: events,
-        customDateWidgets: (p0) {
-          return null;
-        },
         daysOfTheWeekBuilder: (dayIndex) {
           final labels = ["S", "M", "T", "W", "T", "F", "S"];
           return Padding(
