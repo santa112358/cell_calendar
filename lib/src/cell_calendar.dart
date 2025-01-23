@@ -14,6 +14,15 @@ typedef MonthYearBuilder = Widget Function(DateTime? visibleDateTime);
 
 final currentDateProvider = StateProvider((ref) => DateTime.now());
 
+class CellDayField {
+  final Decoration? decoration;
+  final TextStyle? style;
+  final String? text;
+  final Widget? widget;
+
+  CellDayField({this.decoration, this.style, this.text, this.widget});
+}
+
 /// Calendar widget like a Google Calendar
 ///
 /// Expected to be used in full screen
@@ -28,11 +37,11 @@ class CellCalendar extends HookConsumerWidget {
     this.daysOfTheWeekBuilder,
     this.monthYearLabelBuilder,
     this.dateTextStyle,
-    required this.customDateWidgets,
+    this.dayBuilder,
   });
 
   final CellCalendarPageController? cellCalendarPageController;
-  final Widget? Function(DateTime)? customDateWidgets;
+  final CellDayField Function(DateTime)? dayBuilder;
 
   /// Builder to show days of the week labels
   ///
@@ -63,7 +72,7 @@ class CellCalendar extends HookConsumerWidget {
         onCellTapped: onCellTapped,
         todayMarkColor: todayMarkColor,
         todayTextColor: todayTextColor,
-        customDateWidgets: customDateWidgets,
+        customDateWidgets: dayBuilder,
       ),
     );
   }
@@ -94,7 +103,7 @@ class _CalendarPageView extends HookConsumerWidget {
   final MonthYearBuilder? monthYearLabelBuilder;
 
   final TextStyle? dateTextStyle;
-  final Widget? Function(DateTime)? customDateWidgets;
+  final CellDayField? Function(DateTime)? customDateWidgets;
   final List<CalendarEvent> events;
   final void Function(DateTime firstDate, DateTime lastDate)? onPageChanged;
   final void Function(DateTime)? onCellTapped;
@@ -172,7 +181,7 @@ class _CalendarPage extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
-  final Widget? Function(DateTime)? customDateWidgets;
+  final CellDayField? Function(DateTime)? customDateWidgets;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
     final List<DateTime> result = [];

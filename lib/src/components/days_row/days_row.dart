@@ -28,7 +28,7 @@ class DaysRow extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
-  final Widget? Function(DateTime)? customDateWidgets;
+  final CellDayField? Function(DateTime)? customDateWidgets;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _DayCell extends HookConsumerWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
-  final Widget? Function(DateTime)? customDateWidgets;
+  final CellDayField? Function(DateTime)? customDateWidgets;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,7 +82,54 @@ class _DayCell extends HookConsumerWidget {
         date.month == today.month &&
         date.day == today.day;
 
-    final Widget? customWidget = customDateWidgets?.call(date);
+    final CellDayField? data = customDateWidgets?.call(date);
+
+    final Widget day;
+
+    if (data != null) {
+      if (data.widget != null) {
+        day = data.widget ?? Offstage();
+      } else {
+        day = Column(
+          children: [
+            _TodayLabel(
+              date: date,
+              dateTextStyle: dateTextStyle,
+              todayMarkColor: todayMarkColor,
+              todayTextColor: todayTextColor,
+              decoration: data.decoration,
+              data: data.text,
+              style: data.style,
+            ),
+            EventLabels(
+              date: date,
+              events: events,
+            ),
+          ],
+        );
+      }
+    } else {
+      day = Column(
+        children: [
+          (isToday)
+              ? _TodayLabel(
+                  date: date,
+                  dateTextStyle: dateTextStyle,
+                  todayMarkColor: todayMarkColor,
+                  todayTextColor: todayTextColor,
+                )
+              : _DayLabel(
+                  date: date,
+                  visiblePageDate: visiblePageDate,
+                  dateTextStyle: dateTextStyle,
+                ),
+          EventLabels(
+            date: date,
+            events: events,
+          ),
+        ],
+      );
+    }
 
     return Expanded(
       child: GestureDetector(
@@ -106,27 +153,7 @@ class _DayCell extends HookConsumerWidget {
               final notifier = ref.read(cellHeightProvider.notifier);
               notifier.state = size.height;
             },
-            child: Column(
-              children: [
-                customWidget ??
-                    (isToday
-                        ? _TodayLabel(
-                            date: date,
-                            dateTextStyle: dateTextStyle,
-                            todayMarkColor: todayMarkColor,
-                            todayTextColor: todayTextColor,
-                          )
-                        : _DayLabel(
-                            date: date,
-                            visiblePageDate: visiblePageDate,
-                            dateTextStyle: dateTextStyle,
-                          )),
-                EventLabels(
-                  date: date,
-                  events: events,
-                ),
-              ],
-            ),
+            child: day,
           ),
         ),
       ),
@@ -141,12 +168,18 @@ class _TodayLabel extends StatelessWidget {
     required this.dateTextStyle,
     required this.todayMarkColor,
     required this.todayTextColor,
+    this.decoration,
+    this.style,
+    this.data,
   }) : super(key: key);
 
   final DateTime date;
   final TextStyle? dateTextStyle;
   final Color todayMarkColor;
   final Color todayTextColor;
+  final Decoration? decoration;
+  final TextStyle? style;
+  final String? data;
 
   @override
   Widget build(BuildContext context) {
@@ -159,17 +192,16 @@ class _TodayLabel extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 2),
       height: 20,
       width: 20,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: todayMarkColor,
-      ),
+      decoration: decoration ??
+          BoxDecoration(
+            shape: BoxShape.circle,
+            color: todayMarkColor,
+          ),
       child: Center(
         child: Text(
-          date.day.toString(),
+          data ?? date.day.toString(),
           textAlign: TextAlign.center,
-          style: textStyle.copyWith(
-            color: todayTextColor,
-          ),
+          style: style ?? textStyle.copyWith(color: todayTextColor),
         ),
       ),
     );
