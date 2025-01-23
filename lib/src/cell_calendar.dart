@@ -14,6 +14,15 @@ typedef MonthYearBuilder = Widget Function(DateTime? visibleDateTime);
 
 final currentDateProvider = StateProvider((ref) => DateTime.now());
 
+class CellDayField {
+  final Decoration? decoration;
+  final TextStyle? style;
+  final String? text;
+  final Widget? widget;
+
+  CellDayField({this.decoration, this.style, this.text, this.widget});
+}
+
 /// Calendar widget like a Google Calendar
 ///
 /// Expected to be used in full screen
@@ -28,9 +37,11 @@ class CellCalendar extends HookConsumerWidget {
     this.daysOfTheWeekBuilder,
     this.monthYearLabelBuilder,
     this.dateTextStyle,
+    this.dayBuilder,
   });
 
   final CellCalendarPageController? cellCalendarPageController;
+  final CellDayField Function(DateTime)? dayBuilder;
 
   /// Builder to show days of the week labels
   ///
@@ -61,6 +72,7 @@ class CellCalendar extends HookConsumerWidget {
         onCellTapped: onCellTapped,
         todayMarkColor: todayMarkColor,
         todayTextColor: todayTextColor,
+        customDateWidgets: dayBuilder,
       ),
     );
   }
@@ -78,6 +90,7 @@ class _CalendarPageView extends HookConsumerWidget {
     required this.onCellTapped,
     required this.todayMarkColor,
     required this.todayTextColor,
+    required this.customDateWidgets,
   }) : super(key: key);
   final CellCalendarPageController? cellCalendarPageController;
 
@@ -90,7 +103,7 @@ class _CalendarPageView extends HookConsumerWidget {
   final MonthYearBuilder? monthYearLabelBuilder;
 
   final TextStyle? dateTextStyle;
-
+  final CellDayField? Function(DateTime)? customDateWidgets;
   final List<CalendarEvent> events;
   final void Function(DateTime firstDate, DateTime lastDate)? onPageChanged;
   final void Function(DateTime)? onCellTapped;
@@ -121,6 +134,7 @@ class _CalendarPageView extends HookConsumerWidget {
                 todayMarkColor: todayMarkColor,
                 todayTextColor: todayTextColor,
                 events: events,
+                customDateWidgets: customDateWidgets,
               );
             },
             onPageChanged: (index) {
@@ -157,6 +171,7 @@ class _CalendarPage extends StatelessWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    required this.customDateWidgets,
   }) : super(key: key);
 
   final DateTime visiblePageDate;
@@ -166,6 +181,7 @@ class _CalendarPage extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final CellDayField? Function(DateTime)? customDateWidgets;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
     final List<DateTime> result = [];
@@ -202,6 +218,7 @@ class _CalendarPage extends StatelessWidget {
                   todayMarkColor: todayMarkColor,
                   todayTextColor: todayTextColor,
                   events: events,
+                  customDateWidgets: customDateWidgets,
                 );
               },
             ),
