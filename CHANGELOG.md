@@ -1,3 +1,6 @@
+## 0.9.0
+* Add cellBorderSide parameter for customizing calendar cell borders
+
 ## 0.8.0
 * Fix CalendarEvent schema
 * Use riverpod for state management
