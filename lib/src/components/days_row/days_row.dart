@@ -18,6 +18,8 @@ class DaysRow extends StatelessWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    this.cellBorderColor,
+    this.cellBorderWidth = 1.0,
   }) : super(key: key);
 
   final List<DateTime> dates;
@@ -27,6 +29,8 @@ class DaysRow extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final Color? cellBorderColor;
+  final double cellBorderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,8 @@ class DaysRow extends StatelessWidget {
             todayMarkColor: todayMarkColor,
             todayTextColor: todayTextColor,
             events: events,
+            cellBorderColor: cellBorderColor,
+            cellBorderWidth: cellBorderWidth,
           );
         }).toList(),
       ),
@@ -60,6 +66,8 @@ class _DayCell extends HookConsumerWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    this.cellBorderColor,
+    this.cellBorderWidth = 1.0,
   });
 
   final DateTime date;
@@ -69,6 +77,8 @@ class _DayCell extends HookConsumerWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final Color? cellBorderColor;
+  final double cellBorderWidth;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,9 +94,14 @@ class _DayCell extends HookConsumerWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: Theme.of(context).dividerColor, width: 1),
-              right:
-                  BorderSide(color: Theme.of(context).dividerColor, width: 1),
+              top: BorderSide(
+                color: cellBorderColor ?? Theme.of(context).dividerColor,
+                width: cellBorderWidth,
+              ),
+              right: BorderSide(
+                color: cellBorderColor ?? Theme.of(context).dividerColor,
+                width: cellBorderWidth,
+              ),
             ),
           ),
           child: MeasureSize(
