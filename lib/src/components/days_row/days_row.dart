@@ -18,6 +18,7 @@ class DaysRow extends StatelessWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    this.cellBorderSide,
   }) : super(key: key);
 
   final List<DateTime> dates;
@@ -27,6 +28,7 @@ class DaysRow extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final BorderSide? cellBorderSide;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class DaysRow extends StatelessWidget {
             todayMarkColor: todayMarkColor,
             todayTextColor: todayTextColor,
             events: events,
+            cellBorderSide: cellBorderSide,
           );
         }).toList(),
       ),
@@ -60,6 +63,7 @@ class _DayCell extends HookConsumerWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
+    this.cellBorderSide,
   });
 
   final DateTime date;
@@ -69,6 +73,7 @@ class _DayCell extends HookConsumerWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
+  final BorderSide? cellBorderSide;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,8 +89,9 @@ class _DayCell extends HookConsumerWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: Theme.of(context).dividerColor, width: 1),
-              right:
+              top: cellBorderSide ??
+                  BorderSide(color: Theme.of(context).dividerColor, width: 1),
+              right: cellBorderSide ??
                   BorderSide(color: Theme.of(context).dividerColor, width: 1),
             ),
           ),
