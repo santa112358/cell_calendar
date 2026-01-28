@@ -28,8 +28,7 @@ class CellCalendar extends HookConsumerWidget {
     this.daysOfTheWeekBuilder,
     this.monthYearLabelBuilder,
     this.dateTextStyle,
-    this.cellBorderColor,
-    this.cellBorderWidth = 1.0,
+    this.cellBorderSide,
   });
 
   final CellCalendarPageController? cellCalendarPageController;
@@ -50,15 +49,10 @@ class CellCalendar extends HookConsumerWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
 
-  /// Border color for calendar cells
+  /// Border style for calendar cells
   ///
-  /// If not specified, defaults to [Theme.of(context).dividerColor]
-  final Color? cellBorderColor;
-
-  /// Border width for calendar cells
-  ///
-  /// Defaults to 1.0
-  final double cellBorderWidth;
+  /// If not specified, defaults to `BorderSide(color: Theme.of(context).dividerColor, width: 1)`
+  final BorderSide? cellBorderSide;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,8 +67,7 @@ class CellCalendar extends HookConsumerWidget {
         onCellTapped: onCellTapped,
         todayMarkColor: todayMarkColor,
         todayTextColor: todayTextColor,
-        cellBorderColor: cellBorderColor,
-        cellBorderWidth: cellBorderWidth,
+        cellBorderSide: cellBorderSide,
       ),
     );
   }
@@ -92,8 +85,7 @@ class _CalendarPageView extends HookConsumerWidget {
     required this.onCellTapped,
     required this.todayMarkColor,
     required this.todayTextColor,
-    this.cellBorderColor,
-    this.cellBorderWidth = 1.0,
+    this.cellBorderSide,
   }) : super(key: key);
   final CellCalendarPageController? cellCalendarPageController;
 
@@ -112,8 +104,7 @@ class _CalendarPageView extends HookConsumerWidget {
   final void Function(DateTime)? onCellTapped;
   final Color todayMarkColor;
   final Color todayTextColor;
-  final Color? cellBorderColor;
-  final double cellBorderWidth;
+  final BorderSide? cellBorderSide;
 
   DateTime _getFirstDay(DateTime dateTime) {
     final firstDayOfTheMonth = DateTime(dateTime.year, dateTime.month, 1);
@@ -139,8 +130,7 @@ class _CalendarPageView extends HookConsumerWidget {
                 todayMarkColor: todayMarkColor,
                 todayTextColor: todayTextColor,
                 events: events,
-                cellBorderColor: cellBorderColor,
-                cellBorderWidth: cellBorderWidth,
+                cellBorderSide: cellBorderSide,
               );
             },
             onPageChanged: (index) {
@@ -177,8 +167,7 @@ class _CalendarPage extends StatelessWidget {
     required this.todayMarkColor,
     required this.todayTextColor,
     required this.events,
-    this.cellBorderColor,
-    this.cellBorderWidth = 1.0,
+    this.cellBorderSide,
   }) : super(key: key);
 
   final DateTime visiblePageDate;
@@ -188,8 +177,7 @@ class _CalendarPage extends StatelessWidget {
   final Color todayMarkColor;
   final Color todayTextColor;
   final List<CalendarEvent> events;
-  final Color? cellBorderColor;
-  final double cellBorderWidth;
+  final BorderSide? cellBorderSide;
 
   List<DateTime> _getCurrentDays(DateTime dateTime) {
     final List<DateTime> result = [];
@@ -226,8 +214,7 @@ class _CalendarPage extends StatelessWidget {
                   todayMarkColor: todayMarkColor,
                   todayTextColor: todayTextColor,
                   events: events,
-                  cellBorderColor: cellBorderColor,
-                  cellBorderWidth: cellBorderWidth,
+                  cellBorderSide: cellBorderSide,
                 );
               },
             ),
