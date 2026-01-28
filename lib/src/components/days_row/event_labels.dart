@@ -9,7 +9,7 @@ const dayLabelContentHeight = 16;
 const dayLabelVerticalMargin = 4;
 const _dayLabelHeight = dayLabelContentHeight + (dayLabelVerticalMargin * 2);
 
-const _eventLabelContentHeight = 13;
+const _eventLabelContentHeight = 16;
 const _eventLabelBottomMargin = 3;
 const _eventLabelHeight = _eventLabelContentHeight + _eventLabelBottomMargin;
 
@@ -43,9 +43,10 @@ class EventLabels extends HookConsumerWidget {
   }
 
   int _maxIndex(double cellHeight, int eventsLength) {
-    final spaceForEvents = cellHeight - _dayLabelHeight;
+    double spaceForEvents = cellHeight - _dayLabelHeight;
     const indexing = 1;
     const indexForPlot = 1;
+    // spaceForEvents = spaceForEvents - (_eventLabelHeight + 13);
     return spaceForEvents ~/ _eventLabelHeight - (indexing + indexForPlot);
   }
 
@@ -56,51 +57,76 @@ class EventLabels extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
     final eventsOnTheDay = _eventsOnTheDay(date, events);
-    final hasEnoughSpace = _hasEnoughSpace(cellHeight, eventsOnTheDay.length);
-    final maxIndex = _maxIndex(cellHeight, eventsOnTheDay.length);
-    return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: eventsOnTheDay.length,
-      itemBuilder: (context, index) {
-        if (hasEnoughSpace) {
-          return _EventLabel(eventsOnTheDay[index]);
-        } else if (index < maxIndex) {
-          return _EventLabel(eventsOnTheDay[index]);
-        } else if (index == maxIndex) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _EventLabel(
-                eventsOnTheDay[index],
+    // final maxIndex = _maxIndex(cellHeight, eventsOnTheDay.length);
+    // final hasEnoughSpace = eventsOnTheDay.length >
+    //     (maxIndex + 1); //_hasEnoughSpace(cellHeight, eventsOnTheDay.length);
+
+    final maxEventCount = (cellHeight / _eventLabelHeight)
+        .toInt(); //_maxIndex(cellHeight, eventsOnTheDay.length);
+    final hasEnoughSpace = eventsOnTheDay.length <= maxEventCount;
+    final maxIndex = maxEventCount - 1;
+    return Container(
+      height: cellHeight,
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: eventsOnTheDay.length,
+        itemBuilder: (context, index) {
+          if (hasEnoughSpace) {
+            return _EventLabel(
+              event: eventsOnTheDay[index],
+              bottomSpace: 0.0,
+            );
+          } else if (index < (maxIndex - 1)) {
+            return _EventLabel(event: eventsOnTheDay[index], bottomSpace: 0.0);
+          } else if (index == (maxIndex - 1)) {
+            return Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _EventLabel(
+                    event: eventsOnTheDay[index],
+                    bottomSpace: 0,
+                  ),
+                  Center(
+                    child: Text(
+                      '${eventsOnTheDay.length - (maxIndex)}+',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  )
+                ],
               ),
-              Icon(
-                Icons.more_horiz,
-                size: 13,
-              )
-            ],
-          );
-        } else {
-          return SizedBox.shrink();
-        }
-      },
+            );
+          } else {
+            return SizedBox.shrink();
+          }
+        },
+      ),
     );
   }
 }
 
 /// label to show [CalendarEvent]
 class _EventLabel extends StatelessWidget {
-  _EventLabel(this.event);
-
+  final double? bottomSpace;
   final CalendarEvent event;
+
+  _EventLabel({required this.event, this.bottomSpace});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 4, bottom: 3),
-      height: 13,
+      margin: EdgeInsets.only(
+          right: 4,
+          bottom: this.bottomSpace ?? _eventLabelBottomMargin.toDouble()),
+      height: _eventLabelContentHeight.toDouble(),
+      alignment: Alignment.center,
       width: double.infinity,
-      color: event.eventBackgroundColor,
+      decoration: BoxDecoration(
+        color: event.eventTypeColor ?? event.eventBackgroundColor,
+        border: Border.all(
+            color: event.eventTypeBorderColor ?? event.eventBackgroundColor),
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+      ),
       child: Text(
         event.eventName,
         style: event.eventTextStyle,
